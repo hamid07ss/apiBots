@@ -9,6 +9,7 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+set_time_limit(0);
 
 require __DIR__ . '/vendor/autoload.php';
 require __DIR__ . '/bot/DB/DB_.php';
@@ -40,7 +41,7 @@ try {
 
     // Handle telegram getUpdate request
     do {
-        $data = $telegram->handleGetUpdates();
+        $data = $telegram->handleGetUpdates(50);
         if(count($data->getResult())) {
             foreach ((array) $data->getResult() as $result) {
                 $bot->handleMessages($result);
