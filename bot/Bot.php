@@ -69,6 +69,9 @@ class Bot {
         $dataTar = [];
         $data = [];
 
+        shuffle($WantChat_to_boy);
+        shuffle($WantChat_to_girl);
+
         $userChatId = '';
         $targetChatId = '';
 
