@@ -319,9 +319,9 @@ class Bot {
             'parse_mode' => 'HTML'
         ];
 
+        DB_::updateUserSex($chat_id, null);
         if($targetChatId !== 'null'){
             Request::sendMessage($data1);
-            DB_::updateUserSex($chat_id, null);
             DB_::updateUserSex($targetChatId, null);
         }
 
