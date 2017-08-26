@@ -84,7 +84,7 @@ WHERE `chat_id` = '.$chat_id;
                 'parse_mode' => 'HTML'
             ];
 
-            Request::sendMessage($data1);
+            //Request::sendMessage($data1);
 
             $status = $sth->execute();
         } catch (PDOException $e) {
