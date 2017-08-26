@@ -1,0 +1,13 @@
+{
+    "name": "sarani/telegram-bot",
+    "description": "Telegram Bot",
+    "require": {
+        "longman/telegram-bot": "^0.46.0"
+    },
+    "authors": [
+        {
+            "name": "Hamid Sarani",
+            "email": "h.sarani75@gmail.com"
+        }
+    ]
+}
