@@ -131,7 +131,7 @@ class Bot {
 
                         $data1 = [
                             'chat_id' => '@HamidLog',
-                            'text' => '<code>Start Chat:</code>' .
+                            'text' => '✅✅<code>Start Chat:</code>' .
                                 "\n\n<code>$userChatId ==> $targetChatId</code>",
                             'parse_mode' => 'HTML'
                         ];
@@ -212,7 +212,7 @@ class Bot {
                         Request::sendMessage($data);
                         $data1 = [
                             'chat_id' => '@HamidLog',
-                            'text' => '<code>Start Chat:</code>' .
+                            'text' => '✅✅<code>Start Chat:</code>' .
                                 "\n\n<code>$userChatId ==> $targetChatId</code>",
                             'parse_mode' => 'HTML'
                         ];
@@ -294,7 +294,7 @@ class Bot {
 
                 $data1 = [
                     'chat_id' => '@HamidLog',
-                    'text' => '<code>Start Chat:</code>' .
+                    'text' => '✅✅<code>Start Chat:</code>' .
                         "\n\n<code>$chat_id ==> ". $user["chat_id"] ."</code>",
                     'parse_mode' => 'HTML'
                 ];
@@ -314,7 +314,7 @@ class Bot {
     public function endChat($chat_id, $targetChatId) {
         $data1 = [
             'chat_id' => '@HamidLog',
-            'text' => '<code>End Chat:</code>' .
+            'text' => '❌❌<code>End Chat:</code>' .
                 "\n\n<code>$chat_id => $targetChatId</code>",
             'parse_mode' => 'HTML'
         ];
@@ -328,7 +328,7 @@ class Bot {
         if($targetChatId === 'null'){
             $data1 = [
                 'chat_id' => '@HamidLog',
-                'text' => '<code>End Chat(Detected):</code>' .
+                'text' => '❌❌<code>End Chat(Detected):</code>' .
                     "\n\n<code>$chat_id => $targetChatId</code>",
                 'parse_mode' => 'HTML'
             ];
