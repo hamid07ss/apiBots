@@ -512,20 +512,20 @@ class Bot {
                 $output = '~'.$output;
             }
         }
-        else if(intval($NumberStr) > 0){
-            if(intval($NumberStr) < 10){
+        else {
+            if(intval($NumberStr) < 10) {
                 $output .= $zero;
                 $output .= $zero;
             }else if(intval($NumberStr) < 100){
                 $output .= $zero;
             }
+
             $NumberStr = strval($NumberStr);
             for ($i=0; $i<strlen($NumberStr); $i++) {
                 $output .= $NumberStrickers[intval($NumberStr[$i])];
             }
-        }else{
-            $output = '❌❌❌';
         }
+
 
         return $output;
     }
