@@ -42,7 +42,7 @@ class StartCommand extends UserCommand {
         $inviter = $param->getMessage()->getText();
         preg_match('/\d+/', $inviter, $inviterChatId);
 
-        $oldUser = DB_::getUserAddedCount($inviterChatId[0]);
+        $oldUser = DB_::getUserAddedCount($chat_id);
 
         if(count($inviterChatId) > 0 && $inviterChatId[0] != $chat_id){
             if(count($oldUser) <= 0){
