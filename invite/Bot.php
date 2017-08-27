@@ -444,7 +444,7 @@ class Bot {
                     $index++;
                     if($item['chat_id'] == $chat_id){
                         if($index > 4){$text .= "\n...\n...";}
-                        $text .= "\n" . "<b>نفر $index: " . $item['addedCount'] . "</b> ==> شما";
+                        $text .= "\n" . "<b>نفر $index: " . $item['addedCount'] . " امتیاز</b> ==> شما";
                     }
                     else if($index < 4){
                         $text .= "\n" . "نفر " . $index . " : " . $item['addedCount'];
