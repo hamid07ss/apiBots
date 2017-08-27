@@ -437,7 +437,6 @@ class Bot {
         switch($text) {
             case Texts::$GET_STATE:
                 $allAddedCount = DB_::getAllAddedCount();
-                $addedCount = DB_::getUserAddedCount($chat_id);
                 $index = 0;
                 $text = '';
                 foreach($allAddedCount as $item) {
@@ -450,12 +449,11 @@ class Bot {
                         $text .= "\n" . "نفر " . $index . " : " . $item['addedCount'];
                     }
                 }
-                print_r($addedCount);
                 $data = [
                     'chat_id' => $chat_id,
                     'text' => '<b>جدول امتیازات:</b>' .
                     "\n\n" .
-                        (($text !== '') ? $text : 0),
+                        (($text !== '') ? $text : 0) . "\n\n" . "نفر اول برنده یک شارژ 10 هزار تومانی رایگان خواهد شد!!!!",
                     'parse_mode' => 'HTML',
                 ];
 
