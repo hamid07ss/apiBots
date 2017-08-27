@@ -93,9 +93,17 @@ class Bot {
 
     public function handleCallBack(Update $result) {
         $chat_id = $result->getCallbackQuery()->getMessage()->getChat()->getId();
+        if($chat_id < 0){
+            $data = [
+                'chat_id' => $chat_id,
+                'text' => 'لطفا در پیوی پیام بدهید!!!',
+                'parse_mode' => 'HTML',
+            ];
+
+            return Request::sendMessage($data);
+        }
         $callbackData = $result->getCallbackQuery()->getData();
         $data = [];
-        $dataTar = [];
 
         switch($callbackData) {
             case Texts::$CALLBACK_DATA["GIVE_LINK"]:
@@ -106,7 +114,7 @@ class Bot {
                     'parse_mode' => 'HTML',
                 ];
 
-                print_r(Request::editMessageText($data));
+                Request::editMessageText($data);
 
                 $data = [
                     'chat_id' => $chat_id,
