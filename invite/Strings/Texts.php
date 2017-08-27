@@ -53,7 +53,7 @@ class Texts {
 
 
 
-    public $START_MESSAGE = "سلام!
+    public static $START_MESSAGE = "سلام!
 
 این ربات مخصوص دریافت جایزه است!!!
 برای دریافت جوایز عااااالی ربات کافیه این کارا رو انجام بدی:
@@ -66,15 +66,15 @@ class Texts {
 
 <a href='http://telegram.me/joinchat/BRw1fj3E1ND9eW5n2zucTQ'>عضـویت در کانال و شروع دریافت جوایز</a>";
 
-    public $GIVE_LINK = 'دریافت لینک';
-    public $CALLBACK_DATA = [
+    public static $GIVE_LINK = 'دریافت لینک';
+    public static $CALLBACK_DATA = [
         'GIVE_LINK' => 'GIVE_LINK'
     ];
-    public $BOT_START_LINK = 'https://telegram.me/';
-    public $GET_STATE = [
+    public static $BOT_START_LINK = 'https://telegram.me/';
+    public static $GET_STATE = [
         'name' => 'آمار'
     ];
-    public $FORWARD_THIS = 'این پیام را برای دوستان خود ارسال کنید' . "\n" .
+    public static $FORWARD_THIS = 'این پیام را برای دوستان خود ارسال کنید' . "\n" .
                             ' و به ازای هر 10 نفری که از طریق این لینک وارد ربات و کانال میشوند' . "\n" .
                             'یک شارژ 2 هزار تومانی رایگان دریافت کنید!';
 
