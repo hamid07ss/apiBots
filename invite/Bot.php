@@ -460,10 +460,20 @@ class Bot {
                     $index++;
                     if($item['chat_id'] == $chat_id){
                         if($index > 4){$text .= "\n...\n...";}
-                        $text .= "\n" . "<b>نفر $index: " . $item['addedCount'] . " امتیاز</b> ==> شما";
+                        $medal = '';
+                        $cup = '';
+                        if($index == 1){$medal = "🥇";$cup = '🏆🏆';}
+                        if($index == 2){$medal = "🥈";}
+                        if($index == 3){$medal = "🥉";}
+                        $text .= "\n" . "$medal <b>نفر $index: " . $item['addedCount'] . " امتیاز</b> ==> شما " . $cup;
                     }
                     else if($index < 4){
-                        $text .= "\n" . "نفر " . $index . " : " . $item['addedCount'];
+                        $medal = '';
+                        $cup = '';
+                        if($index == 1){$medal = "🥇";$cup = '🏆🏆';}
+                        if($index == 2){$medal = "🥈";}
+                        if($index == 3){$medal = "🥉";}
+                        $text .= "\n" . $medal . "نفر " . $index . " : " . $item['addedCount'] . " $cup";
                     }
                 }
                 $data = [
