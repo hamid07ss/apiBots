@@ -16,13 +16,13 @@ require __DIR__ . '/invite/DB/DB_.php';
 require __DIR__ . '/invite/Strings/Texts.php';
 require __DIR__ . '/invite/Bot.php';
 
-$API_KEY = '423140927:AAHIIkAi695WNzlPLGw0q1jhfVrTfGeUML8';
-$BOT_NAME = 'doostyabi_free_bot';
+$API_KEY = '384418467:AAF1xXQOiVlToT1ldJ7KJAKVIzj_HgQNNpI';
+$BOT_NAME = 'Free_Credit_bot';
 $mysql_credentials = [
     'host' => 'localhost',
     'user' => 'root',
     'password' => '123',
-    'database' => 'bot',
+    'database' => 'invite',
 ];
 $commands_paths = [
     __DIR__ . '/invite/Commands/User',
