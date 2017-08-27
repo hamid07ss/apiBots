@@ -437,9 +437,10 @@ class Bot {
         switch($text) {
             case Texts::$GET_STATE["name"]:
                 $addedCount = DB_::getUserAddedCount($chat_id);
+                print_r($addedCount);
                 $data = [
                     'chat_id' => $chat_id,
-                    'text' => 'تعداد افراد دعوت شده توسط شما:' . "\n\n" . (count($addedCount)>0)?$addedCount[0]["addedCount"]:0,
+                    'text' => 'تعداد افراد دعوت شده توسط شما:' . "\n\n" . (count($addedCount) > 0)?$addedCount[0]["addedCount"]:0,
                     'parse_mode' => 'HTML',
                 ];
 
