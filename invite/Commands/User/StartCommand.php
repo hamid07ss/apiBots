@@ -32,10 +32,23 @@ class StartCommand extends UserCommand {
     public function execute() {
         global $bot;
 
-        print_r($this);
+        $inviterChatId = [];
 
         $param = $this->getUpdate();
-        print_r($param);
+        $inviter = $param->getMessage()->getText();
+        preg_match('/\d+/g', $inviter, $inviterChatId);
+        if(count($inviterChatId) > 0){
+            $userAddedCount = DB_::getUserAddedCount($inviterChatId);
+            if(count($userAddedCount) > 0) {
+                $userAddedCount = intval($userAddedCount) + 1;
+                print_r($inviterChatId . "===>" . $userAddedCount);
+                DB_::newAdd($inviterChatId, $userAddedCount);
+            }else{
+                print_r($inviterChatId . "===>" . $userAddedCount);
+                DB_::newAdd($inviterChatId, 0);
+            }
+        }
+
         $message = $this->getMessage();            // Get Message object
 
         $chat_id = $message->getChat()->getId();   // Get the current Chat ID
