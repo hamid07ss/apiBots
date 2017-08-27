@@ -75,9 +75,7 @@ class Texts {
         'GIVE_LINK' => 'GIVE_LINK'
     ];
     public static $BOT_START_LINK = 'https://telegram.me/';
-    public static $GET_STATE = [
-        'name' => 'آمار'
-    ];
+    public static $GET_STATE = 'آمار';
     public static $FORWARD_THIS = 'این پیام را برای دوستان خود ارسال کنید' . "\n" .
                             ' و اگر تا آخر هفته تعداد افراد بیشتری را دعوت کنید شارژ 10 هزار تومانی رایگان دریافت میکنید!!' . "\n" .
                             'یک شارژ 2 هزار تومانی رایگان دریافت کنید!';

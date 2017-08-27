@@ -106,7 +106,7 @@ class Bot {
                     'parse_mode' => 'HTML',
                 ];
 
-                $data['reply_markup'] = new Keyboard([Texts::$GET_STATE["name"]]);
+                $data['reply_markup'] = new Keyboard([Texts::$GET_STATE]);
                 $data['reply_markup']->resize_keyboard = true;
 
                 print_r(Request::editMessageText($data));
@@ -436,7 +436,7 @@ class Bot {
         $data = [];
 
         switch($text) {
-            case Texts::$GET_STATE["name"]:
+            case Texts::$GET_STATE:
                 $addedCount = DB_::getUserAddedCount($chat_id);
                 print_r($addedCount);
                 $data = [
