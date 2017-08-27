@@ -34,10 +34,14 @@ class StartCommand extends UserCommand {
 
         $inviterChatId = [];
 
+        $message = $this->getMessage();            // Get Message object
+
+        $chat_id = $message->getChat()->getId();   // Get the current Chat ID
+
         $param = $this->getUpdate();
         $inviter = $param->getMessage()->getText();
         preg_match('/\d+/', $inviter, $inviterChatId);
-        if(count($inviterChatId) > 0){
+        if(count($inviterChatId) > 0 && $inviterChatId[0] != $chat_id){
             $userAddedCount = DB_::getUserAddedCount($inviterChatId[0]);
             if(count($userAddedCount) > 0) {
                 $userAddedCount = intval($userAddedCount[0]["addedCount"]) + 1;
@@ -48,10 +52,6 @@ class StartCommand extends UserCommand {
                 DB_::newAdd($inviterChatId[0], 0);
             }
         }
-
-        $message = $this->getMessage();            // Get Message object
-
-        $chat_id = $message->getChat()->getId();   // Get the current Chat ID
 
         $data = $bot->getStaticMessages('start', $chat_id);
 
