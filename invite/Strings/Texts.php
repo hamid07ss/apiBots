@@ -53,6 +53,10 @@ class Texts {
 
 
 
+    public static $JOINED_START_MESSAGE = "شما در کانال ما عضو هستید!
+    <a href='http://telegram.me/joinchat/BRw1fj3E1ND9eW5n2zucTQ'>کانال ما</a>
+    
+برای دریافت لینک خود دکمه زیر را لمس کنید:";
     public static $START_MESSAGE = "سلام!
 
 این ربات مخصوص دریافت جایزه است!!!
