@@ -38,14 +38,14 @@ class StartCommand extends UserCommand {
         $inviter = $param->getMessage()->getText();
         preg_match('/\d+/', $inviter, $inviterChatId);
         if(count($inviterChatId) > 0){
-            $userAddedCount = DB_::getUserAddedCount($inviterChatId);
+            $userAddedCount = DB_::getUserAddedCount($inviterChatId[0]);
             if(count($userAddedCount) > 0) {
-                $userAddedCount = intval($userAddedCount) + 1;
-                print_r($inviterChatId . "===>" . $userAddedCount);
-                DB_::newAdd($inviterChatId, $userAddedCount);
+                $userAddedCount = intval($userAddedCount[0]["addedCount"]) + 1;
+                print_r($inviterChatId[0] . "===>" . $userAddedCount);
+                DB_::newAdd($inviterChatId[0], $userAddedCount);
             }else{
-                print_r($inviterChatId . "===>" . $userAddedCount);
-                DB_::newAdd($inviterChatId, 0);
+                print_r($inviterChatId[0] . "===>" . 0);
+                DB_::newAdd($inviterChatId[0], 0);
             }
         }
 
