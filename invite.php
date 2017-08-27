@@ -36,7 +36,7 @@ try {
 
     // Enable MySQL
     $telegram->enableMySQL($mysql_credentials);
-    $telegram->enableAdmins([93077939, 231812624]);
+//    $telegram->enableAdmins([93077939, 231812624]);
     $telegram->addCommandsPaths($commands_paths);
 
     // Handle telegram getUpdate request
