@@ -465,7 +465,7 @@ class Bot {
                         if($index == 1){$medal = "🥇";$cup = '🏆🏆';}
                         if($index == 2){$medal = "🥈";}
                         if($index == 3){$medal = "🥉";}
-                        $text .= "\n" . "$medal <code>نفر $index</code>. <b>: " . $item['addedCount'] . "</b> ==> شما " . $cup;
+                        $text .= "\n" . "<code>نفر $index</code> $medal . <b>: " . $item['addedCount'] . "</b> ==> شما " . $cup;
                     }
                     else if($index < 4){
                         $medal = '';
@@ -473,7 +473,7 @@ class Bot {
                         if($index == 1){$medal = "🥇";$cup = '🏆🏆';}
                         if($index == 2){$medal = "🥈";}
                         if($index == 3){$medal = "🥉";}
-                        $text .= "\n" . $medal . " <code>نفر $index</code>. <b>: " . $item['addedCount'] . " $cup";
+                        $text .= "\n" . " <code>نفر $index</code> $medal . <b>: " . $item['addedCount'] . " $cup";
                     }
                 }
                 $data = [
