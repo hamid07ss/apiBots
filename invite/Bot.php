@@ -121,7 +121,7 @@ class Bot {
                     'text' => Texts::$FORWARD_THIS,
                     'parse_mode' => 'HTML',
                 ];
-                $data['reply_markup'] = new Keyboard([Texts::$GET_STATE]);
+                $data['reply_markup'] = new Keyboard([Texts::$GET_STATE, Texts::$GIVE_LINK]);
                 $data['reply_markup']->resize_keyboard = true;
                 break;
 
@@ -443,6 +443,15 @@ class Bot {
         $data = [];
 
         switch($text) {
+            case Texts::$GIVE_LINK:
+                $data = [
+                    'chat_id' => $chat_id,
+                    'text' => Texts::GetUserLink($chat_id),
+                    'parse_mode' => 'HTML',
+                ];
+
+                break;
+
             case Texts::$GET_STATE:
                 $allAddedCount = DB_::getAllAddedCount();
                 $index = 0;
