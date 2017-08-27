@@ -106,9 +106,6 @@ class Bot {
                     'parse_mode' => 'HTML',
                 ];
 
-                $data['reply_markup'] = new Keyboard([Texts::$GET_STATE]);
-                $data['reply_markup']->resize_keyboard = true;
-
                 print_r(Request::editMessageText($data));
 
                 $data = [
@@ -116,6 +113,8 @@ class Bot {
                     'text' => Texts::$FORWARD_THIS,
                     'parse_mode' => 'HTML',
                 ];
+                $data['reply_markup'] = new Keyboard([Texts::$GET_STATE]);
+                $data['reply_markup']->resize_keyboard = true;
                 break;
 
             /*case $this->CNOTACT_US:
