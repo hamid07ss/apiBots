@@ -456,9 +456,6 @@ class Bot {
                 $allAddedCount = DB_::getAllAddedCount();
                 $index = 0;
                 $text = '';
-                if(count($allAddedCount) > 0){
-                    $text .= "\n" . "<b>(شماره رتبه). : (امتیاز)</b>";
-                }
                 foreach($allAddedCount as $item) {
                     $index++;
                     if($item['chat_id'] == $chat_id){
@@ -468,7 +465,7 @@ class Bot {
                         if($index == 1){$medal = "🥇";$cup = '🏆🏆';}
                         if($index == 2){$medal = "🥈";}
                         if($index == 3){$medal = "🥉";}
-                        $text .= "\n" . "$medal <b>$index. : " . $item['addedCount'] . "</b> ==> شما " . $cup;
+                        $text .= "\n" . "$medal <b>$index. </b><code>(نفر $index)</code><b>: " . $item['addedCount'] . "</b> ==> شما " . $cup;
                     }
                     else if($index < 4){
                         $medal = '';
@@ -476,7 +473,7 @@ class Bot {
                         if($index == 1){$medal = "🥇";$cup = '🏆🏆';}
                         if($index == 2){$medal = "🥈";}
                         if($index == 3){$medal = "🥉";}
-                        $text .= "\n" . $medal . " " . $index . ". : " . $item['addedCount'] . " $cup";
+                        $text .= "\n" . $medal . " " . $index . ". </b><code>(نفر $index)</code><b>: " . $item['addedCount'] . " $cup";
                     }
                 }
                 $data = [
