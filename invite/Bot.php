@@ -109,7 +109,7 @@ class Bot {
                 $data['reply_markup'] = new Keyboard([Texts::$GET_STATE["name"]]);
                 $data['reply_markup']->resize_keyboard = true;
 
-                Request::editMessageText($data);
+                print_r(Request::editMessageText($data));
 
                 $data = [
                     'chat_id' => $chat_id,

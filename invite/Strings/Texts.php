@@ -85,8 +85,8 @@ class Texts {
 
     public static function GetUserLink($chat_id){
         global $telegram;
-        $text = 'شارژ 2 هزار تومنی رایگان!!!'. "\n\n" .
-                'فقط با دعوت کردن 10 نفر!' . "\n\n" .
+        $text = 'شارژ 10 هزار تومنی رایگان!!!'. "\n\n" .
+                'با دعوت تعداد بیشتری کاربر نسبت به بقیه کاربران ربات!' . "\n\n" .
                 'عضو شو!  دعوت کن!  شارژ رایگان بگیر!';
         return $text . "\n\n" . Texts::$BOT_START_LINK . $telegram->getBotUsername() . '?start=' . $chat_id;
     }
