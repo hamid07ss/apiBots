@@ -465,7 +465,7 @@ class Bot {
                         if($index == 1){$medal = "🥇";$cup = '🏆🏆';}
                         if($index == 2){$medal = "🥈";}
                         if($index == 3){$medal = "🥉";}
-                        $text .= "\n" . "<b>نفر $medal : " . $item['addedCount'] . " امتیاز ==> شما " . $cup . "</b>";
+                        $text .= "\n" . "<b>نفر $medal : " . $this->GetNumberSticker($item['addedCount']) . " امتیاز ==> شما " . $cup . "</b>";
                     }
                     else if($index < 4){
                         $medal = '';
@@ -473,12 +473,12 @@ class Bot {
                         if($index == 1){$medal = "🥇";$cup = '🏆🏆';}
                         if($index == 2){$medal = "🥈";}
                         if($index == 3){$medal = "🥉";}
-                        $text .= "\n" . " <b>نفر $medal : " . $item['addedCount'] . " امتیاز $cup". "</b>";
+                        $text .= "\n" . " <b>نفر $medal : " . $this->GetNumberSticker($item['addedCount']) . " امتیاز $cup". "</b>";
                     }
                 }
                 $data = [
                     'chat_id' => $chat_id,
-                    'text' => '<i>جدول امتیازات:</i>' . "\n" . '<code>جدول امتیازات:</code>' .
+                    'text' => '<i>جدول امتیازات:</i>' .
                     "\n" .
                         (($text !== '') ? $text : 0) . "\n\n" . "نفر اول برنده یک شارژ 10 هزار تومانی رایگان خواهد شد!!!!",
                     'parse_mode' => 'HTML',
@@ -493,6 +493,41 @@ class Bot {
         else {
             return false;
         }
+    }
+
+    public function GetNumberSticker($NumberStr, $str = false){
+        $NumberStrickers = ['0️⃣', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣'];
+        $zero = '0️⃣';
+        $output = '';
+        $NumberStr = intval($NumberStr);
+
+        if($str){
+            $output = strval($NumberStr);
+            if($NumberStr < 0){
+                $output = '~~~';
+            }
+            else if($NumberStr < 10){
+                $output = '~~'.$output;
+            }else if($NumberStr < 100){
+                $output = '~'.$output;
+            }
+        }
+        else if(intval($NumberStr) > 0){
+            if(intval($NumberStr) < 10){
+                $output .= $zero;
+                $output .= $zero;
+            }else if(intval($NumberStr) < 100){
+                $output .= $zero;
+            }
+            $NumberStr = strval($NumberStr);
+            for ($i=0; $i<strlen($NumberStr); $i++) {
+                $output .= $NumberStrickers[intval($NumberStr[$i])];
+            }
+        }else{
+            $output = '❌❌❌';
+        }
+
+        return $output;
     }
 
     public function getStaticMessages($type, $chat_id) {
