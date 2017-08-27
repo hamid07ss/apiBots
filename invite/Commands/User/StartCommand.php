@@ -36,7 +36,7 @@ class StartCommand extends UserCommand {
 
         $param = $this->getUpdate();
         $inviter = $param->getMessage()->getText();
-        preg_match('/\d+/g', $inviter, $inviterChatId);
+        preg_match('/\d+/', $inviter, $inviterChatId);
         if(count($inviterChatId) > 0){
             $userAddedCount = DB_::getUserAddedCount($inviterChatId);
             if(count($userAddedCount) > 0) {
