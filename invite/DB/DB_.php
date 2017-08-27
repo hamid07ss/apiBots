@@ -80,4 +80,22 @@ class DB_ extends DB{
             throw new TelegramException($e->getMessage());
         }
     }
+
+    public static function getAllAddedCount()
+    {
+        if (!self::isDbConnected()) {
+            return false;
+        }
+
+        try {
+            $query = "SELECT * FROM `AddedDB` ORDER BY `addedCount` ASC";
+
+            $sth = self::$pdo->prepare($query);
+            $sth->execute();
+
+            return $sth->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new TelegramException($e->getMessage());
+        }
+    }
 }

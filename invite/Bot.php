@@ -436,7 +436,20 @@ class Bot {
 
         switch($text) {
             case Texts::$GET_STATE:
+                $allAddedCount = DB_::getAllAddedCount();
                 $addedCount = DB_::getUserAddedCount($chat_id);
+                $index = 0;
+                $text = '';
+                foreach($allAddedCount as $item) {
+                    if($item['chat_id'] == $chat_id){
+                        $text .= "\n" . "<b>نفر $index: " . $item['addedCount'] . "</b> ==> شما";
+                    }
+                    else if($index < 3){
+                        $text .= "\n" . "نفر " . $index . " : " . $item['addedCount'];
+                    }
+
+                    $index++;
+                }
                 print_r($addedCount);
                 $data = [
                     'chat_id' => $chat_id,
