@@ -449,6 +449,13 @@ class Bot {
                     'text' => Texts::GetUserLink($chat_id),
                     'parse_mode' => 'HTML',
                 ];
+                Request::sendMessage($data);
+
+                $data = [
+                    'chat_id' => $chat_id,
+                    'text' => Texts::$FORWARD_THIS,
+                    'parse_mode' => 'HTML',
+                ];
 
                 break;
 
