@@ -53,7 +53,7 @@ class DB_ extends DB{
             ');
 
             $sth->bindParam(':chat_id', $chat_id, PDO::PARAM_STR);
-            $sth->bindParam(':addedCount', $addedCount, PDO::PARAM_STR, 255);
+            $sth->bindParam(':addedCount', $addedCount, PDO::PARAM_INT);
 
             $status = $sth->execute();
         } catch (PDOException $e) {
