@@ -441,14 +441,14 @@ class Bot {
                 $index = 0;
                 $text = '';
                 foreach($allAddedCount as $item) {
+                    $index++;
                     if($item['chat_id'] == $chat_id){
+                        if($index > 4){$text .= "\n...\n...";}
                         $text .= "\n" . "<b>نفر $index: " . $item['addedCount'] . "</b> ==> شما";
                     }
-                    else if($index < 3){
+                    else if($index < 4){
                         $text .= "\n" . "نفر " . $index . " : " . $item['addedCount'];
                     }
-
-                    $index++;
                 }
                 print_r($addedCount);
                 $data = [
