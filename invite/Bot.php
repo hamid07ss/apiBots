@@ -102,13 +102,14 @@ class Bot {
                 $data = [
                     'chat_id' => $chat_id,
                     'text' => Texts::GetUserLink($chat_id),
+                    'message_id' => $result->getCallbackQuery()->getMessage()->getMessageId(),
                     'parse_mode' => 'HTML',
                 ];
 
                 $data['reply_markup'] = new Keyboard([Texts::$GET_STATE["name"]]);
                 $data['reply_markup']->resize_keyboard = true;
 
-                Request::sendMessage($data);
+                Request::editMessageText($data);
 
                 $data = [
                     'chat_id' => $chat_id,
