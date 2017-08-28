@@ -473,7 +473,7 @@ class Bot {
                     if($index == 3){$medal = "🥉";}
                     if($item['chat_id'] == $chat_id){
                         if($index > 4){$text .= "\n...\n...";}
-                        $text .= "\n" . "$medal : <code>" . $this->GetNumberSticker($item['addedCount']) . "</code> ==> شما " . $cup;
+                        $text .= "\n" . "$medal : " . $this->GetNumberSticker($item['addedCount']) . " ==> شما " . $cup;
                     }
                     else if($index < 4){
                         $text .= "\n" . "$medal : " . $this->GetNumberSticker($item['addedCount']) . " $cup";
