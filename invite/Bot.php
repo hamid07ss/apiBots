@@ -441,7 +441,18 @@ class Bot {
             $AddedCount = json_decode($AddedDb[0]["addedCount"]);
             $index = 0;
             foreach($Added as $user){
-                if(isset($user["Joined"])){
+                if(isset($user["Joined"]) && $user["Joined"] === true){
+                    $isChatMember = Request::getChatMember([
+                        'chat_id' => '@Crazy_lol',
+                        'user_id' => $user["chat_id"]
+                    ]);
+                    if(!$isChatMember->getOk() || $isChatMember->getResult()->status === 'left') {
+                        $Added[$index]['Joined'] = false;
+                        $AddedCount = intval($AddedCount) - 1;
+                    }
+
+
+
                     $index++;
                     continue;
                 }
