@@ -458,11 +458,12 @@ class Bot {
             $AddedCount = $AddedDb[0]["addedCount"];
             $index = 0;
             foreach($Added as $user){
-                print_r($user);
+//                print_r($user);
                 if(isset($user["Joined"]) && $user["Joined"] === true){
                     if(isset($user["Before"]) && $user["Before"] === true){
                         // User Was In Channel Before Invite And Score Of This User Not Increased So Score Not Decrease Now
                     }else{
+                        print_r('isset joined else' . PHP_EOL);
                         $isChatMember = Request::getChatMember([
                             'chat_id' => '@Crazy_lol',
                             'user_id' => $user["chat_id"]
@@ -473,6 +474,7 @@ class Bot {
                         }
                     }
 
+                    print_r('isset joined continue' . PHP_EOL);
 
                     $index++;
                     continue;
@@ -483,6 +485,7 @@ class Bot {
                     'user_id' => $user["chat_id"]
                 ]);
                 if($isChatMember->getOk() && $isChatMember->getResult()->status !== 'left') {
+                    print_r('$isChatMember increase ' . $user["chat_id"] . PHP_EOL);
                     $Added[$chat_id]['Joined'] = true;
                     $AddedCount = intval($AddedCount) + 1;
                 }

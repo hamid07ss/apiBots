@@ -46,7 +46,7 @@ class StartCommand extends UserCommand {
 
         $oldUser = DB_::getUserAdded($chat_id);
 
-        if(count($inviterChatId) > 0 && $inviterChatId[0] != $chat_id) {
+        if(count($inviterChatId) > 0 && intval($inviterChatId[0]) !== intval($chat_id)) {
             if(count($oldUser) <= 0) {
                 $AddedDB = DB_::getUserAdded($inviterChatId[0]);
                 $addedArr = json_decode($AddedDB[0]["Added"], true);
