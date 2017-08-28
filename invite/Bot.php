@@ -469,7 +469,7 @@ class Bot {
                             'user_id' => $user["chat_id"]
                         ]);
                         if(!$isChatMember->getOk() || $isChatMember->getResult()->status === 'left') {
-                            $Added[$user["chat_id"]]['Joined'] = false;
+//                            $Added[$user["chat_id"]]['Joined'] = false;
                             $AddedCount = intval($AddedCount) - 1;
                         }
                     }
