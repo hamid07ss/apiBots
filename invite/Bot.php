@@ -514,7 +514,9 @@ class Bot {
                 $usersCount = count($AddedDB);
                 $maxScore = 0;
                 $allInvited = 0;
+                $maxScore_Chat_id = 0;
                 foreach($AddedDB as $user){
+                    $maxScore_Chat_id = intval($user["addedCount"])>$maxScore?$user["chat_id"]:$maxScore_Chat_id;
                     $maxScore = intval($user["addedCount"])>$maxScore?intval($user["addedCount"]):$maxScore;
                     if(intval($user["addedCount"]) > 0){
                         $allInvited = $allInvited + intval($user["addedCount"]);
@@ -523,7 +525,8 @@ class Bot {
 
                 $data = [
                     'chat_id' => $chat_id,
-                    'text' => 'تعداد کل کاربرا: ' . $usersCount . "\n\n" . 'بیشترین امتیاز: ' . $maxScore . "\n\n" .
+                    'text' => 'تعداد کل کاربرا: ' . $usersCount . "\n\n" .
+                        'بیشترین امتیاز: ' . $maxScore . " => ". $maxScore_Chat_id ."\n\n" .
                         "تعداد کل دعوت شده ها: " . $allInvited,
                     'disable_web_page_preview' => true,
                     'parse_mode' => 'HTML',
