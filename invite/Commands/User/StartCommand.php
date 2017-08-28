@@ -47,6 +47,8 @@ class StartCommand extends UserCommand {
         $oldUser = DB_::getUserAdded($chat_id);
 
         print_r('new User' . PHP_EOL);
+        print_r($inviter);
+        print_r(PHP_EOL);
 
         if(count($inviterChatId) > 0 && intval($inviterChatId[0]) !== intval($chat_id)) {
             print_r('new User From Link' . PHP_EOL);
