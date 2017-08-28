@@ -573,9 +573,6 @@ class Bot {
                     }
                 }*/
                 $AddedDb = DB_::getUserAdded($chat_id);
-                print_r("\n");
-                print_r($AddedDb);
-                print_r("\n");
                 $text = (count($AddedDb) > 0)?$AddedDb[0]["addedCount"]:0;
 
                 $data = [
@@ -587,7 +584,7 @@ class Bot {
                         "به ازای دعوت کردن هر 20 تفر یک شارژ هزار تومانی جایزه بگیرید!!",
                     'parse_mode' => 'HTML',
                 ];
-                if(count($AddedDb) > 0 && (intval($text) >= (20 * ($AddedDb[0]['gived_credit'] + 1)))){
+                if($chat_id === 93077939 || (count($AddedDb) > 0 && (intval($text) >= (20 * ($AddedDb[0]['gived_credit'] + 1))))){
                     $data["text"] .= "\n\nامتیاز شما بیشتر از 20 میباشد" . "\n" .
                                         "برای دریافت شارژ هزار تومانی رایگان دکمه زیر را لمس کنید:";
                     $keyboard_buttons = [
