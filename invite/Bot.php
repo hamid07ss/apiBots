@@ -573,6 +573,9 @@ class Bot {
                     }
                 }*/
                 $AddedDb = DB_::getUserAdded($chat_id);
+                print_r("\n");
+                print_r($AddedDb);
+                print_r("\n");
                 $text = (count($AddedDb) > 0)?$AddedDb[0]["addedCount"]:0;
 
                 $data = [
