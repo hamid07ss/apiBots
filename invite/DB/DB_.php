@@ -174,4 +174,76 @@ class DB_ extends DB{
             throw new TelegramException($e->getMessage());
         }
     }
+
+    public static function updateContact($chat_id, $message = null, $checked = null){
+        if (!self::isDbConnected()) {
+            return false;
+        }
+
+        try {
+            $message = ($message === null)?'wait':$message;
+            $checked = ($checked === null)?'no':$checked;
+
+            $query = "UPDATE `" . self::$TB_CONTACT . "`
+                        SET `message` = '$message',
+                        `checked` = '$checked'
+                        WHERE `chat_id` = $chat_id";
+
+            $sth = self::$pdo->prepare($query);
+
+            return $sth->execute();
+        } catch (PDOException $e) {
+            throw new TelegramException($e->getMessage());
+        }
+    }
+
+
+    public static function InsertToContact($chat_id, $message = null, $checked = null)
+    {
+        if (!self::isDbConnected()) {
+            return false;
+        }
+
+        try {
+            $message = ($message === null)?'wait':$message;
+            $checked = ($checked === null)?'no':$checked;
+
+            $query = "INSERT INTO ". self::$TB_CONTACT ."
+            (`chat_id`, `message`, `checked`)
+            VALUES
+            ($chat_id, '$message', '$checked')";
+
+            $sth = self::$pdo->prepare($query);
+
+            return $sth->execute();
+        } catch (PDOException $e) {
+            throw new TelegramException($e->getMessage());
+        }
+    }
+
+    public static function getContact($chat_id = null, $answer = null){
+        if (!self::isDbConnected()) {
+            return false;
+        }
+
+        try {
+            $query = "SELECT * FROM ". self::$TB_CONTACT;
+            if($chat_id){
+                $query .= " WHERE `chat_id` = $chat_id";
+                if($answer){
+                    $query .= " AND `checked` = '$answer'";
+                }
+            }
+            else if($answer){
+                $query .= " WHERE `checked` = '$answer'";
+            }
+
+            $sth = self::$pdo->prepare($query);
+            $sth->execute();
+
+            return $sth->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new TelegramException($e->getMessage());
+        }
+    }
 }

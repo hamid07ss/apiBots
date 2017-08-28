@@ -176,6 +176,8 @@ class Bot {
                 ];
                 $data['reply_markup'] = new Keyboard([Texts::$GET_STATE, Texts::$GIVE_LINK]);
                 $data['reply_markup']->resize_keyboard = true;
+
+                print_r($data);
                 break;
 
             /*case $this->CNOTACT_US:
@@ -530,7 +532,20 @@ class Bot {
             }
         }
 
+        $is_Contact = isset(Texts::$ContactUsers[$chat_id]) ? Texts::$ContactUsers[$chat_id] : false;
+
+
         switch($text) {
+            case Texts::$Contact:
+                Texts::$ContactUsers[$chat_id] = true;
+                $data = [
+                    'chat_id' => $chat_id,
+                    'text' => Texts::$Send_Contact_Message,
+                    'parse_mode' => 'HTML',
+                ];
+
+                break;
+
             case Texts::$GIVE_LINK:
                 $data = [
                     'chat_id' => $chat_id,
@@ -593,6 +608,21 @@ class Bot {
                     ];
 
                     $data['reply_markup'] = new InlineKeyboard($keyboard_buttons);
+                }
+
+                break;
+
+            default:
+                if($is_Contact){
+                    Texts::$ContactUsers[$chat_id] = false;
+
+                    DB_::InsertToContact($chat_id, $text);
+                    $data = [
+                        'chat_id' => $chat_id,
+                        'text' => Texts::$Contact_MSG_Received
+                    ];
+
+                    break;
                 }
 
                 break;
