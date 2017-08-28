@@ -137,7 +137,6 @@ class Bot {
             case Texts::$CALLBACK_DATA["GIVE_CREDIT_IRANCELL"]:
             case Texts::$CALLBACK_DATA["GIVE_CREDIT_MCI"]:
                 $AddedDb = DB_::getUserAdded($chat_id);
-//                $AddedDb[0]['gived_credit']
                 $text = '';
                 if(count($AddedDb) > 0 && (intval($AddedDb[0]['addedCount']) >= (20 * (intval($AddedDb[0]['gived_credit']) + 1)))){
                     $credit = $this->getCredit($callbackData);
@@ -146,6 +145,8 @@ class Bot {
                             "لطفا بعد از این زمان مجددا برای دریافت شارژ اقدام کنید.";
                     }else{
                         $text = 'دریافت شارژ با موفقیت انجام شد.' . "\n" . "کد شارژ:" . "\n\n" . $credit;
+
+                        DB_::updateCreditCount($chat_id, $AddedDb[0]['gived_credit'] + 1);
                     }
                 }
                 $data = [

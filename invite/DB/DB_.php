@@ -150,4 +150,24 @@ class DB_ extends DB{
             throw new TelegramException($e->getMessage());
         }
     }
+
+    public static function updateCreditCount($chat_id, $credit_count)
+    {
+        if (!self::isDbConnected()) {
+            return false;
+        }
+
+        try {
+            $sth = self::$pdo->prepare("UPDATE `AddedDB`
+                SET `gived_credit` = $credit_count
+                WHERE `chat_id` = $chat_id
+            ");
+
+            $status = $sth->execute();
+
+            return $status;
+        } catch (PDOException $e) {
+            throw new TelegramException($e->getMessage());
+        }
+    }
 }
