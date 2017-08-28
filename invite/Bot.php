@@ -210,10 +210,6 @@ class Bot {
                     'users' => false,
                 ]);
 
-                $allGirls = DB_::selectUsersSex('girl');
-                $allBoys = DB_::selectUsersSex('boy');
-                $allOnlines = DB_::selectUsersSex('all', 'wait', true);
-
 
                 date_default_timezone_set('Asia/Tehran');
                 $date = date('Y-m-d h-i-s');
@@ -241,36 +237,6 @@ class Bot {
                     ]),
                 ];
 
-                $keyboard_buttons1 = [
-                    new InlineKeyboardButton([
-                        'text' => count($allGirls) . ' 👱‍♀️ دختر',
-                        'callback_data' => 'test',
-                    ]),
-                    new InlineKeyboardButton([
-                        'text' => count($allBoys) . ' 👦 پسر',
-                        'callback_data' => 'test',
-                    ]),
-                    new InlineKeyboardButton([
-                        'text' => count($allOnlines) . ' 🔵 آنلاین',
-                        'callback_data' => 'test',
-                    ]),
-                ];
-
-                $users_in_wait = DB_::selectUsersSex('all', 'boy');
-                $users_in_wait2 = DB_::selectUsersSex('all', 'girl');
-                $users_in_girl = (count($users_in_wait)) . ' کاربر منتظر پسرن';
-                $users_in_boy = (count($users_in_wait2)) . ' کاربر منتظر دخترن';
-                $keyboard_buttons2 = [
-                    new InlineKeyboardButton([
-                        'text' => $users_in_boy,
-                        'callback_data' => 'test',
-                    ]),
-                    new InlineKeyboardButton([
-                        'text' => $users_in_girl,
-                        'callback_data' => 'test',
-                    ]),
-                ];
-
                 $keyboard_buttons3 = [
                     new InlineKeyboardButton([
                         'text' => '♻️ Refresh',
@@ -283,8 +249,6 @@ class Bot {
                 ];
 
                 $data['reply_markup'] = new InlineKeyboard($keyboard_buttons);
-                $data["reply_markup"]->inline_keyboard[1] = $keyboard_buttons1;
-                $data["reply_markup"]->inline_keyboard[2] = $keyboard_buttons2;
                 $data["reply_markup"]->inline_keyboard[3] = $keyboard_buttons3;
 
                 return Request::editMessageText($data);
@@ -580,11 +544,9 @@ class Bot {
 
                 $data = [
                     'chat_id' => $chat_id,
-                    'text' => '<i>امتیاز شما:</i>' .
-                    "\n" .
-                        $text . "\n" .
-                        "تعداد شارژ دریافتی شما: " . ((count($AddedDb) > 0)?intval($AddedDb[0]["gived_credit"]):0) . "\n\n" .
-                        "به ازای دعوت کردن هر 30 تفر یک شارژ هزار تومانی جایزه بگیرید!!",
+                    'text' => '⚜️ امتیاز شما: ' . $text . "\n\n" .
+                        "⚜️ تعداد شارژ دریافتی شما: " . ((count($AddedDb) > 0)?intval($AddedDb[0]["gived_credit"]):0) . "\n\n" .
+                        "به ازای دعوت کردن هر 30 تفر یک شارژ هزار تومانی جایزه بگیرید 🔊",
                     'parse_mode' => 'HTML',
                 ];
                 if((count($AddedDb) > 0 && (intval($text) >= (self::$minScore * ($AddedDb[0]['gived_credit'] + 1))))){
