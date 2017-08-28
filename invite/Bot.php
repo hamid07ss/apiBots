@@ -735,7 +735,7 @@ class Bot {
                 if($isChatMember->getOk() && $isChatMember->getResult()->status !== 'left') {
                     $text = Texts::$START_MESSAGE;
                 }else{
-                    $text = Texts::$JOINED_START_MESSAGE;
+                    $text = Texts::$START_MESSAGE . "\n\n" .Texts::$JOINED_START_MESSAGE;
                 }
 
                 $data = [
