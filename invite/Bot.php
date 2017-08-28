@@ -453,6 +453,46 @@ class Bot {
         }
     }
 
+    public function getUser($chat_id) {
+        $chat = null;
+        $created_at = null;
+        $updated_at = null;
+        $result = null;
+        $text = null;
+        $results = DB::selectChats([
+            'groups' => true,
+            'supergroups' => true,
+            'channels' => true,
+            'users' => true,
+            'chat_id' => $chat_id, //Specific chat_id to select
+        ]);
+        if($results[0]['chat_id']) {
+//            $result['id']       = $result[0]['chat_id'];
+//            $result['username'] = $result[0]['chat_username'];
+
+            $created_at = $results[0]['chat_created_at'];
+            $updated_at = $results[0]['chat_updated_at'];
+
+            $text = 'User ID: ' . $chat_id . PHP_EOL;
+            $text .= 'Name: ' . $results[0]['first_name'] . ' ' . $results[0]['last_name'] . PHP_EOL;
+
+            $username = $results[0]['username'];
+            if($username !== null && $username !== '') {
+                $text .= 'Username: @' . $username . PHP_EOL;
+            }
+
+            $text .= 'First time seen: ' . $created_at . PHP_EOL;
+            $text .= 'Last activity: ' . $updated_at . PHP_EOL;
+        }
+
+        if($text) {
+            return $text;
+        }
+        else {
+            return '';
+        }
+    }
+
     public function UpdateUserScore($chat_id){
         $AddedDb = DB_::getUserAdded($chat_id);
         if(count($AddedDb) > 0){
@@ -523,11 +563,13 @@ class Bot {
                     }
                 }
 
+                $userInfo = self::getUser($maxScore_Chat_id);
+
                 $data = [
                     'chat_id' => $chat_id,
                     'text' => 'تعداد کل کاربرا: ' . $usersCount . "\n\n" .
                         'بیشترین امتیاز: ' . $maxScore . " => ". $maxScore_Chat_id ."\n\n" .
-                        "تعداد کل دعوت شده ها: " . $allInvited,
+                        "تعداد کل دعوت شده ها: " . $allInvited . "\n\n\nنفر اول:\n\n" . $userInfo,
                     'disable_web_page_preview' => true,
                     'parse_mode' => 'HTML',
                 ];
