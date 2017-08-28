@@ -177,6 +177,10 @@ class Bot {
                 $data['reply_markup'] = new Keyboard([Texts::$GET_STATE, Texts::$GIVE_LINK]);
                 $data['reply_markup']->resize_keyboard = true;
 
+                $row2 = $data['reply_markup']->keyboard[0][0];
+                $row2['text'] = Texts::$Contact;
+                $data['reply_markup']->keyboard[1] = $row2;
+
                 print_r($data);
                 break;
 
