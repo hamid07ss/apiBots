@@ -465,22 +465,18 @@ class Bot {
                 $text = '';
                 foreach($allAddedCount as $item) {
                     $index++;
+
+                    $medal = '';
+                    $cup = '';
+                    if($index == 1){$medal = "🥇";$cup = '🏆🏆';}
+                    if($index == 2){$medal = "🥈";}
+                    if($index == 3){$medal = "🥉";}
                     if($item['chat_id'] == $chat_id){
                         if($index > 4){$text .= "\n...\n...";}
-                        $medal = '';
-                        $cup = '';
-                        if($index == 1){$medal = "🥇";$cup = '🏆🏆';}
-                        if($index == 2){$medal = "🥈";}
-                        if($index == 3){$medal = "🥉";}
-                        $text .= "\n" . "<b>نفر $medal : " . $this->GetNumberSticker($item['addedCount']) . " امتیاز ==> شما " . $cup . "</b>";
+                        $text .= "\n" . "نفر $medal : <code>" . $this->GetNumberSticker($item['addedCount']) . "</code> امتیاز ==> شما " . $cup;
                     }
                     else if($index < 4){
-                        $medal = '';
-                        $cup = '';
-                        if($index == 1){$medal = "🥇";$cup = '🏆🏆';}
-                        if($index == 2){$medal = "🥈";}
-                        if($index == 3){$medal = "🥉";}
-                        $text .= "\n" . " <b>نفر $medal : " . $this->GetNumberSticker($item['addedCount']) . " امتیاز $cup". "</b>";
+                        $text .= "\n" . "$medal : " . $this->GetNumberSticker($item['addedCount']) . " $cup";
                     }
                 }
 
