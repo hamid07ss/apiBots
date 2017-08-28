@@ -517,7 +517,7 @@ class Bot {
                 foreach($AddedDB as $user){
                     $maxScore = intval($user["addedCount"])>$maxScore?intval($user["addedCount"]):$maxScore;
                     if(intval($user["addedCount"]) > 0){
-                        $allInvited++;
+                        $allInvited = $allInvited + intval($user["addedCount"]);
                     }
                 }
 
