@@ -483,6 +483,11 @@ class Bot {
                         $text .= "\n" . " <b>نفر $medal : " . $this->GetNumberSticker($item['addedCount']) . " امتیاز $cup". "</b>";
                     }
                 }
+
+                print_r("\n");
+                print_r($allAddedCount);
+                print_r("\n");
+
                 $data = [
                     'chat_id' => $chat_id,
                     'text' => '<i>جدول امتیازات:</i>' .

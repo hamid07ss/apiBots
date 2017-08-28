@@ -88,7 +88,7 @@ class DB_ extends DB{
         }
 
         try {
-            $query = "SELECT * FROM `AddedDB` ORDER BY `addedCount` ASC";
+            $query = "SELECT * FROM `AddedDB` ORDER BY `addedCount` DESC";
 
             $sth = self::$pdo->prepare($query);
             $sth->execute();
