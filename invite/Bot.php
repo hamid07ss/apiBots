@@ -18,6 +18,8 @@ use Longman\TelegramBot\DB_;
 use function PHPSTORM_META\type;
 
 class Bot {
+    public static $minScore = 30;
+
     public function __construct() {
         global $telegram;
         $this->telegram = $telegram;
@@ -138,7 +140,7 @@ class Bot {
             case Texts::$CALLBACK_DATA["GIVE_CREDIT_MCI"]:
                 $AddedDb = DB_::getUserAdded($chat_id);
                 $text = '';
-                if(count($AddedDb) > 0 && (intval($AddedDb[0]['addedCount']) >= (30 * (intval($AddedDb[0]['gived_credit']) + 1)))){
+                if(count($AddedDb) > 0 && (intval($AddedDb[0]['addedCount']) >= (self::$minScore * (intval($AddedDb[0]['gived_credit']) + 1)))){
                     $credit = $this->getCredit($callbackData);
                     if(!$credit){
                         $text = 'دریافت شارژ با مشکل مواجه شد.' . "\n" . "حداکثر تا 2 ساعت دیگر مشکل برطرف خواهد شد." . "\n\n" .
@@ -585,7 +587,7 @@ class Bot {
                         "به ازای دعوت کردن هر 30 تفر یک شارژ هزار تومانی جایزه بگیرید!!",
                     'parse_mode' => 'HTML',
                 ];
-                if((count($AddedDb) > 0 && (intval($text) >= (30 * ($AddedDb[0]['gived_credit'] + 1))))){
+                if((count($AddedDb) > 0 && (intval($text) >= (self::$minScore * ($AddedDb[0]['gived_credit'] + 1))))){
                     $data["text"] .= "\n\nامتیاز شما بیشتر از 30 میباشد" . "\n" .
                                         "برای دریافت شارژ هزار تومانی رایگان دکمه زیر را لمس کنید:";
                     $keyboard_buttons = [
@@ -728,15 +730,7 @@ class Bot {
 
             case 'start':
             default:
-                $isChatMember = Request::getChatMember([
-                    'chat_id' => '@Crazy_lol',
-                    'user_id' => $chat_id
-                ]);
-                if($isChatMember->getOk() && $isChatMember->getResult()->status !== 'left') {
-                    $text = Texts::$START_MESSAGE . "\n\n" .Texts::$JOINED_START_MESSAGE;
-                }else{
-                    $text = Texts::$START_MESSAGE;
-                }
+                $text = Texts::$START_MESSAGE;
 
                 $data = [
                     'chat_id' => $chat_id,
@@ -744,17 +738,6 @@ class Bot {
                     'disable_web_page_preview' => true,
                     'parse_mode' => 'HTML',
                 ];
-
-                if($isChatMember->getOk() && $isChatMember->getResult()->status !== 'left') {
-                    $keyboard_buttons = [
-                        new InlineKeyboardButton([
-                            'text' => Texts::$GIVE_LINK,
-                            'callback_data' => Texts::$CALLBACK_DATA["GIVE_LINK"],
-                        ])
-                    ];
-
-                    $data['reply_markup'] = new InlineKeyboard($keyboard_buttons);
-                }
                 break;
         }
 

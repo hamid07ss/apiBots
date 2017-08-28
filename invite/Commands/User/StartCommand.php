@@ -15,6 +15,7 @@ use Longman\TelegramBot\Entities\InlineKeyboardButton;
 use Longman\TelegramBot\Entities\InlineKeyboard;
 use Longman\TelegramBot\DB_;
 use Longman\TelegramBot\Bot;
+use Longman\TelegramBot\Texts;
 
 
 class StartCommand extends UserCommand {
@@ -93,6 +94,33 @@ class StartCommand extends UserCommand {
 
 
         $data = $bot->getStaticMessages('start', $chat_id);
+        Request::sendMessage($data);
+
+        $data = [
+            'chat_id' => $chat_id,
+            'text' => '',
+            'disable_web_page_preview' => true,
+            'parse_mode' => 'HTML',
+        ];
+
+        $isChatMember = Request::getChatMember([
+            'chat_id' => '@Crazy_lol',
+            'user_id' => $chat_id
+        ]);
+
+        if($isChatMember->getOk() && $isChatMember->getResult()->status !== 'left') {
+            $data['text'] = Texts::$JOINED_START_MESSAGE;
+            $keyboard_buttons = [
+                new InlineKeyboardButton([
+                    'text' => Texts::$GIVE_LINK,
+                    'callback_data' => Texts::$CALLBACK_DATA["GIVE_LINK"],
+                ])
+            ];
+
+            $data['reply_markup'] = new InlineKeyboard($keyboard_buttons);
+        }else{
+            $data['text'] = Texts::$NOT_JOINED_START_MESSAGE;
+        }
 
         return Request::sendMessage($data);
     }
