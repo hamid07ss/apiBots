@@ -458,6 +458,7 @@ class Bot {
             $AddedCount = $AddedDb[0]["addedCount"];
             $index = 0;
             foreach($Added as $user){
+                print_r($user);
                 if(isset($user["Joined"]) && $user["Joined"] === true){
                     if(isset($user["Before"]) && $user["Before"] === true){
                         // User Was In Channel Before Invite And Score Of This User Not Increased So Score Not Decrease Now
