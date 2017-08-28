@@ -249,7 +249,7 @@ class Bot {
                 ];
 
                 $data['reply_markup'] = new InlineKeyboard($keyboard_buttons);
-                $data["reply_markup"]->inline_keyboard[3] = $keyboard_buttons3;
+                $data["reply_markup"]->inline_keyboard[1] = $keyboard_buttons3;
 
                 return Request::editMessageText($data);
 
