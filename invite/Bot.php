@@ -138,7 +138,7 @@ class Bot {
             case Texts::$CALLBACK_DATA["GIVE_CREDIT_MCI"]:
                 $AddedDb = DB_::getUserAdded($chat_id);
                 $text = '';
-                if(count($AddedDb) > 0 && (intval($AddedDb[0]['addedCount']) >= (20 * (intval($AddedDb[0]['gived_credit']) + 1)))){
+                if(count($AddedDb) > 0 && (intval($AddedDb[0]['addedCount']) >= (30 * (intval($AddedDb[0]['gived_credit']) + 1)))){
                     $credit = $this->getCredit($callbackData);
                     if(!$credit){
                         $text = 'دریافت شارژ با مشکل مواجه شد.' . "\n" . "حداکثر تا 2 ساعت دیگر مشکل برطرف خواهد شد." . "\n\n" .
@@ -582,11 +582,11 @@ class Bot {
                     "\n" .
                         $text . "\n" .
                         "تعداد شارژ دریافتی شما: " . ((count($AddedDb) > 0)?intval($AddedDb[0]["gived_credit"]):0) . "\n\n" .
-                        "به ازای دعوت کردن هر 20 تفر یک شارژ هزار تومانی جایزه بگیرید!!",
+                        "به ازای دعوت کردن هر 30 تفر یک شارژ هزار تومانی جایزه بگیرید!!",
                     'parse_mode' => 'HTML',
                 ];
-                if((count($AddedDb) > 0 && (intval($text) >= (20 * ($AddedDb[0]['gived_credit'] + 1))))){
-                    $data["text"] .= "\n\nامتیاز شما بیشتر از 20 میباشد" . "\n" .
+                if((count($AddedDb) > 0 && (intval($text) >= (30 * ($AddedDb[0]['gived_credit'] + 1))))){
+                    $data["text"] .= "\n\nامتیاز شما بیشتر از 30 میباشد" . "\n" .
                                         "برای دریافت شارژ هزار تومانی رایگان دکمه زیر را لمس کنید:";
                     $keyboard_buttons = [
                         new InlineKeyboardButton([
