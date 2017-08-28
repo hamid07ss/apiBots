@@ -468,7 +468,7 @@ class Bot {
                             'user_id' => $user["chat_id"]
                         ]);
                         if(!$isChatMember->getOk() || $isChatMember->getResult()->status === 'left') {
-                            $Added[$index]['Joined'] = false;
+                            $Added[$chat_id]['Joined'] = false;
                             $AddedCount = intval($AddedCount) - 1;
                         }
                     }
@@ -483,7 +483,7 @@ class Bot {
                     'user_id' => $user["chat_id"]
                 ]);
                 if($isChatMember->getOk() && $isChatMember->getResult()->status !== 'left') {
-                    $Added[$index]['Joined'] = true;
+                    $Added[$chat_id]['Joined'] = true;
                     $AddedCount = intval($AddedCount) + 1;
                 }
 
