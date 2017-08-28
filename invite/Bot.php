@@ -501,6 +501,26 @@ class Bot {
         $chat_id = $result->getMessage()->getChat()->getId();
         $data = [];
 
+        if($text === 'report'){
+            if($chat_id === 93077939){
+                $AddedDB = DB_::getUserAdded('report');
+                $usersCount = count($AddedDB);
+                $maxScore = 0;
+                foreach($AddedDB as $user){
+                    $maxScore = intval($user["addedCount"])>$maxScore?intval($user["addedCount"]):$maxScore;
+                }
+
+                $data = [
+                    'chat_id' => $chat_id,
+                    'text' => 'تعداد کل کاربرا: ' . $usersCount . "\n\n" . 'بیشترین امتیاز: ' . $maxScore,
+                    'disable_web_page_preview' => true,
+                    'parse_mode' => 'HTML',
+                ];
+                return Request::sendMessage($data);
+
+            }
+        }
+
         switch($text) {
             case Texts::$GIVE_LINK:
                 $data = [
