@@ -76,6 +76,10 @@ class DB_ extends DB{
         try {
             $query = "SELECT * FROM `AddedDB` WHERE `chat_id` = '$chat_id'";
 
+            if($chat_id === 'report'){
+                $query = "SELECT * FROM `AddedDB`";
+            }
+
             $sth = self::$pdo->prepare($query);
             $sth->execute();
 
