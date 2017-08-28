@@ -520,7 +520,7 @@ class Bot {
 
                 $data = [
                     'chat_id' => $chat_id,
-                    'text' => 'تعداد کل کاربرا: ' . $usersCount . "\n\n" . 'بیشترین امتیاز: ' . $maxScore .
+                    'text' => 'تعداد کل کاربرا: ' . $usersCount . "\n\n" . 'بیشترین امتیاز: ' . $maxScore . "\n\n" .
                         "تعداد کل دعوت شده ها: " . $allInvited,
                     'disable_web_page_preview' => true,
                     'parse_mode' => 'HTML',
