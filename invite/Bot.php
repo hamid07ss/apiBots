@@ -485,7 +485,7 @@ class Bot {
                 }
 
                 print_r("\n");
-                print_r($allAddedCount);
+                print_r($this->GetNumberSticker(1));
                 print_r("\n");
 
                 $data = [
