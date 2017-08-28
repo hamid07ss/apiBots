@@ -46,7 +46,10 @@ class StartCommand extends UserCommand {
 
         $oldUser = DB_::getUserAdded($chat_id);
 
+        print_r('new User' . PHP_EOL);
+
         if(count($inviterChatId) > 0 && intval($inviterChatId[0]) !== intval($chat_id)) {
+            print_r('new User From Link' . PHP_EOL);
             if(count($oldUser) <= 0) {
                 $AddedDB = DB_::getUserAdded($inviterChatId[0]);
                 $addedArr = json_decode($AddedDB[0]["Added"], true);
@@ -63,11 +66,16 @@ class StartCommand extends UserCommand {
                     ];
                 }
 
+                print_r('inviter user added array updated' . PHP_EOL);
+                print_r($addedArr);
+                print_r(PHP_EOL);
+
                 $isChatMember = Request::getChatMember([
                     'chat_id' => '@Crazy_lol',
                     'user_id' => $chat_id
                 ]);
                 if($isChatMember->getOk() && $isChatMember->getResult()->status !== 'left') {
+                    print_r('new user Before Joined' . PHP_EOL);
                     $addedArr[$chat_id]['Joined'] = true;
                     $addedArr[$chat_id]['Before'] = true;
                 }
@@ -80,6 +88,10 @@ class StartCommand extends UserCommand {
                 else {
                     $userAddedCount = 0;
                 }
+
+                print_r('inviter addedCount updated' . PHP_EOL);
+                print_r($userAddedCount);
+                print_r(PHP_EOL);
 
 
                 DB_::newAdd($inviterChatId[0], $userAddedCount, $addedArr);
