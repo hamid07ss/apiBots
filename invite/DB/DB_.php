@@ -32,28 +32,32 @@ class DB_ extends DB{
      *
      * @param $chat_id
      * @param $addedCount string girl or boy
+     * @param $addedArr array
      * @return bool If the insert was successful
      * @throws TelegramException
      */
-    public static function newAdd($chat_id, $addedCount)
+    public static function newAdd($chat_id, $addedCount, $addedArr = [])
     {
         if (!self::isDbConnected()) {
             return false;
         }
 
         try {
+            $addedArr = json_encode($addedArr);
             $sth = self::$pdo->prepare('
                 INSERT INTO `AddedDB`
-                (`chat_id`, `addedCount`)
+                (`chat_id`, `addedCount`, `Added`)
                 VALUES
-                (:chat_id, :addedCount)
+                (:chat_id, :addedCount, :Added)
                 ON DUPLICATE KEY UPDATE
                     `chat_id`        = VALUES(`chat_id`),
                     `addedCount`     = VALUES(`addedCount`)
+                    `Added`          = VALUES(`Added`)
             ');
 
             $sth->bindParam(':chat_id', $chat_id, PDO::PARAM_STR);
             $sth->bindParam(':addedCount', $addedCount, PDO::PARAM_INT);
+            $sth->bindParam(':Added', $addedArr, PDO::PARAM_STR);
 
             $status = $sth->execute();
         } catch (PDOException $e) {
@@ -63,7 +67,7 @@ class DB_ extends DB{
         return $status;
     }
 
-    public static function getUserAddedCount($chat_id)
+    public static function getUserAdded($chat_id)
     {
         if (!self::isDbConnected()) {
             return false;

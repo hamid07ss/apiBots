@@ -434,6 +434,34 @@ class Bot {
         }
     }
 
+    public function UpdateUserScore($chat_id){
+        $AddedDb = DB_::getUserAdded($chat_id);
+        if(count($AddedDb) > 0){
+            $Added = json_decode($AddedDb[0]["Added"]);
+            $AddedCount = json_decode($AddedDb[0]["addedCount"]);
+            $index = 0;
+            foreach($Added as $user){
+                if(isset($user["Joined"])){
+                    $index++;
+                    continue;
+                }
+
+                $isChatMember = Request::getChatMember([
+                    'chat_id' => '@Crazy_lol',
+                    'user_id' => $user["chat_id"]
+                ]);
+                if($isChatMember->getOk() && $isChatMember->getResult()->status !== 'left') {
+                    $Added[$index]['Joined'] = true;
+                    $AddedCount = intval($AddedCount) + 1;
+                }
+
+                $index++;
+            }
+
+            DB_::newAdd($chat_id, $AddedCount, $Added);
+        }
+    }
+
     public function UsersMessages(Update $result) {
         if(!$result->getMessage()) {
             return false;
@@ -460,7 +488,8 @@ class Bot {
                 break;
 
             case Texts::$GET_STATE:
-                $allAddedCount = DB_::getAllAddedCount();
+                $this->UpdateUserScore($chat_id);
+                /*$allAddedCount = DB_::getAllAddedCount();
                 $index = 0;
                 $text = '';
                 foreach($allAddedCount as $item) {
@@ -478,13 +507,15 @@ class Bot {
                     else if($index < 4){
                         $text .= "\n" . "$medal : " . $this->GetNumberSticker($item['addedCount']) . " $cup";
                     }
-                }
+                }*/
+                $AddedCount = DB_::getUserAdded($chat_id);
+                $text = (count($AddedCount) > 0)?$AddedCount[0]["addedCount"]:0;
 
                 $data = [
                     'chat_id' => $chat_id,
-                    'text' => '<i>جدول امتیازات:</i>' .
+                    'text' => '<i>امتیاز شما:</i>' .
                     "\n" .
-                        (($text !== '') ? $text : 0) . "\n\n" . "نفر اول برنده یک شارژ 10 هزار تومانی رایگان خواهد شد!!!!",
+                        $text . "\n\n" . "به ازای دعوت کردن هر 20 تفر یک شارژ هزار تومانی جایزه بگیرید!!",
                     'parse_mode' => 'HTML',
                 ];
 

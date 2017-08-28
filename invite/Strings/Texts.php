@@ -77,14 +77,14 @@ class Texts {
     public static $BOT_START_LINK = 'https://telegram.me/';
     public static $GET_STATE = 'آمار';
     public static $FORWARD_THIS = 'این پیام را برای دوستان خود ارسال کنید' . "\n" .
-                            ' و اگر تا آخر هفته تعداد افراد بیشتری را دعوت کنید' . "\n" .
-                            'شارژ 10 هزار تومانی رایگان دریافت میکنید!!';
+                            ' و به ازای هر 20 نفری که از طریق این لینک وارد ربات میشن' . "\n" .
+                            'شارژ هزار تومانی رایگان دریافت میکنید!!';
 
 
     public static function GetUserLink($chat_id){
         global $telegram;
-        $text = 'شارژ 10 هزار تومنی رایگان!!!'. "\n\n" .
-                'با دعوت تعداد بیشتری کاربر نسبت به بقیه کاربران ربات!' . "\n\n" .
+        $text = 'شارژ 2 هزار تومنی رایگان!!!'. "\n\n" .
+                'به ازای دعوت هر 20 نفر از طریق لینکی که ربات به شما میدهد!' . "\n\n" .
                 'عضو شو!  دعوت کن!  شارژ رایگان بگیر!';
         return $text . "\n\n" . Texts::$BOT_START_LINK . $telegram->getBotUsername() . '?start=' . $chat_id;
     }
