@@ -510,13 +510,18 @@ class Bot {
                 $AddedDB = DB_::getUserAdded('report');
                 $usersCount = count($AddedDB);
                 $maxScore = 0;
+                $allInvited = 0;
                 foreach($AddedDB as $user){
                     $maxScore = intval($user["addedCount"])>$maxScore?intval($user["addedCount"]):$maxScore;
+                    if(intval($user["addedCount"]) > 0){
+                        $allInvited++;
+                    }
                 }
 
                 $data = [
                     'chat_id' => $chat_id,
-                    'text' => 'تعداد کل کاربرا: ' . $usersCount . "\n\n" . 'بیشترین امتیاز: ' . $maxScore,
+                    'text' => 'تعداد کل کاربرا: ' . $usersCount . "\n\n" . 'بیشترین امتیاز: ' . $maxScore .
+                        "تعداد کل دعوت شده ها: " . $allInvited,
                     'disable_web_page_preview' => true,
                     'parse_mode' => 'HTML',
                 ];
