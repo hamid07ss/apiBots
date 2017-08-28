@@ -51,7 +51,7 @@ class DB_ extends DB{
                 (:chat_id, :addedCount, :Added)
                 ON DUPLICATE KEY UPDATE
                     `chat_id`        = VALUES(`chat_id`),
-                    `addedCount`     = VALUES(`addedCount`)
+                    `addedCount`     = VALUES(`addedCount`),
                     `Added`          = VALUES(`Added`)
             ');
 
@@ -83,6 +83,54 @@ class DB_ extends DB{
         } catch (PDOException $e) {
             throw new TelegramException($e->getMessage());
         }
+    }
+
+    public static function getCredit($type, $used = 0)
+    {
+        if (!self::isDbConnected()) {
+            return false;
+        }
+
+        try {
+            $query = "SELECT * FROM `Credits` WHERE `type` = '$type' AND `used` = $used";
+
+            $sth = self::$pdo->prepare($query);
+            $sth->execute();
+
+            return $sth->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            throw new TelegramException($e->getMessage());
+        }
+    }
+
+    public static function insertCredit($type, $code, $used)
+    {
+        if (!self::isDbConnected()) {
+            return false;
+        }
+
+        try {
+            $sth = self::$pdo->prepare('
+                INSERT INTO `Credits`
+                (`type`, `code`, `used`)
+                VALUES
+                (:cre_type, :code, :used)
+                ON DUPLICATE KEY UPDATE
+                    `type` = VALUES(`type`),
+                    `code` = VALUES(`code`),
+                    `used` = VALUES(`used`)
+            ');
+
+            $sth->bindParam(':cre_type', $type, PDO::PARAM_STR);
+            $sth->bindParam(':code', $code, PDO::PARAM_INT);
+            $sth->bindParam(':used', $used, PDO::PARAM_INT);
+
+            $status = $sth->execute();
+        } catch (PDOException $e) {
+            throw new TelegramException($e->getMessage());
+        }
+
+        return $status;
     }
 
     public static function getAllAddedCount()

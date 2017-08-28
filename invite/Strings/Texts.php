@@ -72,7 +72,9 @@ class Texts {
 
     public static $GIVE_LINK = 'دریافت لینک';
     public static $CALLBACK_DATA = [
-        'GIVE_LINK' => 'GIVE_LINK'
+        'GIVE_LINK' => 'GIVE_LINK',
+        'GIVE_CREDIT_IRANCELL' => 'GIVE_CREDIT_IRANCELL',
+        'GIVE_CREDIT_MCI' => 'GIVE_CREDIT_MCI'
     ];
     public static $BOT_START_LINK = 'https://telegram.me/';
     public static $GET_STATE = 'آمار';

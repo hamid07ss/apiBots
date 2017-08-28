@@ -91,6 +91,34 @@ class Bot {
         }
     }
 
+    public function getCredit($type){
+        $credit = false;
+        $cre_type = '';
+        switch($type){
+            case Texts::$CALLBACK_DATA["GIVE_CREDIT_IRANCELL"]:
+                $cre_type = 'irancell';
+                $credit = DB_::getCredit($cre_type);
+                if(count($credit) > 0){
+                    $credit = $credit[0]['code'];
+                }
+                break;
+
+            case Texts::$CALLBACK_DATA["GIVE_CREDIT_MCI"]:
+                $cre_type = 'mci';
+                $credit = DB_::getCredit($cre_type);
+                if(count($credit) > 0){
+                    $credit = $credit[0]['code'];
+                }
+                break;
+        }
+
+        if($credit){
+            DB_::insertCredit($cre_type, $credit, 1);
+        }
+
+        return $credit;
+    }
+
     public function handleCallBack(Update $result) {
         $chat_id = $result->getCallbackQuery()->getMessage()->getChat()->getId();
         if($chat_id < 0){
@@ -106,6 +134,28 @@ class Bot {
         $data = [];
 
         switch($callbackData) {
+            case Texts::$CALLBACK_DATA["GIVE_CREDIT_IRANCELL"]:
+            case Texts::$CALLBACK_DATA["GIVE_CREDIT_MCI"]:
+                $AddedDb = DB_::getUserAdded($chat_id);
+//                $AddedDb[0]['gived_credit']
+                $text = '';
+                if(count($AddedDb) > 0 && (intval($AddedDb[0]['addedCount']) >= (20 * (intval($AddedDb[0]['gived_credit']) + 1)))){
+                    $credit = $this->getCredit($callbackData);
+                    if(!$credit){
+                        $text = 'دریافت شارژ با مشکل مواجه شد.' . "\n" . "حداکثر تا 2 ساعت دیگر مشکل برطرف خواهد شد." . "\n\n" .
+                            "لطفا بعد از این زمان مجددا برای دریافت شارژ اقدام کنید.";
+                    }else{
+                        $text = 'دریافت شارژ با موفقیت انجام شد.' . "\n" . "کد شارژ:" . "\n\n" . $credit;
+                    }
+                }
+                $data = [
+                    'chat_id' => $chat_id,
+                    'text' => $text,
+                    'parse_mode' => 'HTML',
+                ];
+
+                break;
+
             case Texts::$CALLBACK_DATA["GIVE_LINK"]:
                 $data = [
                     'chat_id' => $chat_id,
@@ -522,16 +572,34 @@ class Bot {
                         $text .= "\n" . "$medal : " . $this->GetNumberSticker($item['addedCount']) . " $cup";
                     }
                 }*/
-                $AddedCount = DB_::getUserAdded($chat_id);
-                $text = (count($AddedCount) > 0)?$AddedCount[0]["addedCount"]:0;
+                $AddedDb = DB_::getUserAdded($chat_id);
+                $text = (count($AddedDb) > 0)?$AddedDb[0]["addedCount"]:0;
 
                 $data = [
                     'chat_id' => $chat_id,
                     'text' => '<i>امتیاز شما:</i>' .
                     "\n" .
-                        $text . "\n\n" . "به ازای دعوت کردن هر 20 تفر یک شارژ هزار تومانی جایزه بگیرید!!",
+                        $text . "\n" .
+                        "تعداد شارژ دریافتی شما: " . ((count($AddedDb) > 0)?intval($AddedDb[0]["gived_credit"]):0) . "\n\n" .
+                        "به ازای دعوت کردن هر 20 تفر یک شارژ هزار تومانی جایزه بگیرید!!",
                     'parse_mode' => 'HTML',
                 ];
+                if(count($AddedDb) > 0 && (intval($text) >= (20 * ($AddedDb[0]['gived_credit'] + 1)))){
+                    $data["text"] .= "\n\nامتیاز شما بیشتر از 20 میباشد" . "\n" .
+                                        "برای دریافت شارژ هزار تومانی رایگان دکمه زیر را لمس کنید:";
+                    $keyboard_buttons = [
+                        new InlineKeyboardButton([
+                            'text' => 'شارژ ایرانسل',
+                            'callback_data' => Texts::$CALLBACK_DATA["GIVE_CREDIT_IRANCELL"],
+                        ]),
+                        new InlineKeyboardButton([
+                            'text' => 'شارژ همراه اول',
+                            'callback_data' => Texts::$CALLBACK_DATA["GIVE_CREDIT_MCI"],
+                        ])
+                    ];
+
+                    $data['reply_markup'] = new InlineKeyboard($keyboard_buttons);
+                }
 
                 break;
         }
