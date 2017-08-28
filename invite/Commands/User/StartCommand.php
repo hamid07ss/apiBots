@@ -50,15 +50,24 @@ class StartCommand extends UserCommand {
                 $AddedDB = DB_::getUserAdded($inviterChatId[0]);
                 $addedArr = json_decode($AddedDB[0]["Added"]);
                 if(count($addedArr) > 0){
-                    $addedArr[] = [
+                    $addedArr[$chat_id] = [
                         'chat_id' => $chat_id
                     ];
                 }else{
                     $addedArr = [
-                        0 => [
+                        $chat_id => [
                             'chat_id' => $chat_id
                         ]
                     ];
+                }
+
+                $isChatMember = Request::getChatMember([
+                    'chat_id' => '@Crazy_lol',
+                    'user_id' => $chat_id
+                ]);
+                if($isChatMember->getOk() && $isChatMember->getResult()->status !== 'left') {
+                    $addedArr[$chat_id]['Joined'] = true;
+                    $addedArr[$chat_id]['Before'] = true;
                 }
 
 
