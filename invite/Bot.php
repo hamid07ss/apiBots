@@ -506,7 +506,7 @@ class Bot {
         $data = [];
 
         if($text === 'report'){
-            if($chat_id === 93077939){
+            if($chat_id === 93077939 || $chat_id === 231812624){
                 $AddedDB = DB_::getUserAdded('report');
                 $usersCount = count($AddedDB);
                 $maxScore = 0;
