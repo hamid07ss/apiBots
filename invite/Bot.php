@@ -461,7 +461,7 @@ class Bot {
             $index = 0;
             foreach($Added as $user){
 //                print_r($user);
-                if(isset($user["Joined"]) && $user["Joined"] === true){
+                if(isset($user["Joined"]) && ($user["Joined"] === true || $user["Joined"] !== 'leave')){
                     if(isset($user["Before"]) && $user["Before"] === true){
                         // User Was In Channel Before Invite And Score Of This User Not Increased So Score Not Decrease Now
                     }else{
@@ -471,8 +471,9 @@ class Bot {
                             'user_id' => $user["chat_id"]
                         ]);
                         if(!$isChatMember->getOk() || $isChatMember->getResult()->status === 'left') {
-//                            $Added[$user["chat_id"]]['Joined'] = false;
+                            $Added[$user["chat_id"]]['Joined'] = 'leave';
                             $AddedCount = intval($AddedCount) - 1;
+                            $AddedCount = ($AddedCount>0)?$AddedCount:0;
                         }
                     }
 
