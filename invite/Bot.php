@@ -454,8 +454,8 @@ class Bot {
     public function UpdateUserScore($chat_id){
         $AddedDb = DB_::getUserAdded($chat_id);
         if(count($AddedDb) > 0){
-            $Added = json_decode($AddedDb[0]["Added"]);
-            $AddedCount = json_decode($AddedDb[0]["addedCount"]);
+            $Added = json_decode($AddedDb[0]["Added"], true);
+            $AddedCount = $AddedDb[0]["addedCount"];
             $index = 0;
             foreach($Added as $user){
                 if(isset($user["Joined"]) && $user["Joined"] === true){
