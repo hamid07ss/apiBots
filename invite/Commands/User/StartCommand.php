@@ -45,15 +45,16 @@ class StartCommand extends UserCommand {
 
         $oldUser = DB_::getUserAdded($chat_id);
 
-        if(count($inviterChatId) > 0 && $inviterChatId[0] != $chat_id){
-            if(count($oldUser) <= 0){
+        if(count($inviterChatId) > 0 && $inviterChatId[0] != $chat_id) {
+            if(count($oldUser) <= 0) {
                 $AddedDB = DB_::getUserAdded($inviterChatId[0]);
                 $addedArr = json_decode($AddedDB[0]["Added"]);
-                if(count($addedArr) > 0){
+                if(count($addedArr) > 0) {
                     $addedArr[$chat_id] = [
                         'chat_id' => $chat_id
                     ];
-                }else{
+                }
+                else {
                     $addedArr = [
                         $chat_id => [
                             'chat_id' => $chat_id
@@ -74,18 +75,22 @@ class StartCommand extends UserCommand {
                 $userAddedCount = $AddedDB;
                 if(count($userAddedCount) > 0) {
                     $userAddedCount = intval($userAddedCount[0]["addedCount"]);
-                }else{
+                }
+                else {
                     $userAddedCount = 0;
                 }
 
 
                 DB_::newAdd($inviterChatId[0], $userAddedCount, $addedArr);
-            }else{
+            }
+            else {
                 DB_::newAdd($chat_id, 0);
             }
-        }else{
+        }
+        else if($chat_id > 0) {
             DB_::newAdd($chat_id, 0);
         }
+
 
         $data = $bot->getStaticMessages('start', $chat_id);
 
