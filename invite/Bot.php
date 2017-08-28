@@ -745,14 +745,16 @@ class Bot {
                     'parse_mode' => 'HTML',
                 ];
 
-                $keyboard_buttons = [
-                    new InlineKeyboardButton([
-                        'text' => Texts::$GIVE_LINK,
-                        'callback_data' => Texts::$CALLBACK_DATA["GIVE_LINK"],
-                    ])
-                ];
+                if($isChatMember->getOk() && $isChatMember->getResult()->status !== 'left') {
+                    $keyboard_buttons = [
+                        new InlineKeyboardButton([
+                            'text' => Texts::$GIVE_LINK,
+                            'callback_data' => Texts::$CALLBACK_DATA["GIVE_LINK"],
+                        ])
+                    ];
 
-                $data['reply_markup'] = new InlineKeyboard($keyboard_buttons);
+                    $data['reply_markup'] = new InlineKeyboard($keyboard_buttons);
+                }
                 break;
         }
 
