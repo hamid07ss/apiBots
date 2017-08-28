@@ -732,14 +732,9 @@ class Bot {
                     'chat_id' => '@Crazy_lol',
                     'user_id' => $chat_id
                 ]);
-                print_r($isChatMember);
                 if($isChatMember->getOk() && $isChatMember->getResult()->status !== 'left') {
-
-                    print_r('if');
                     $text = Texts::$START_MESSAGE . "\n\n" .Texts::$JOINED_START_MESSAGE;
                 }else{
-
-                    print_r('else');
                     $text = Texts::$START_MESSAGE;
                 }
 
