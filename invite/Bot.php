@@ -579,6 +579,7 @@ class Bot {
                 }
 
                 $allData = '';
+                krsort($all);
                 foreach($all as $one){
                     $allData .= $one["text"] . PHP_EOL;
                 }
