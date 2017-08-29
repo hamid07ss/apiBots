@@ -573,8 +573,8 @@ class Bot {
                             ];
                         }
                         $all[intval($user["addedCount"])]['count'] = $all[intval($user["addedCount"])]['count'] + 1;
-                        $all[intval($user["addedCount"])]['text'] = 'تعداد افرادی که ' . intval($user["addedCount"]) . 'کاربر را دعوت کرده اند:' . "\n" .
-                                $all[intval($user["addedCount"])]['count'];
+                        $all[intval($user["addedCount"])]['text'] = self::GetNumberSticker(intval($user["addedCount"])) . " " . 'را دعوت کردند => ' .
+                            self::GetNumberSticker(intval($all[intval($user["addedCount"])]['count']));
                     }
                 }
 
