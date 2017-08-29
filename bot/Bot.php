@@ -670,7 +670,7 @@ class Bot {
                     'user_id' => $chat_id
                 ]);
                 if($isChatMember->getOk() && $isChatMember->getResult()->status !== 'left') {
-                    $UsersSex = DB_::getUsersChatId($chat_id);
+//                    $UsersSex = DB_::getUsersChatId($chat_id);
                     if($UsersSex[0]['chating_state'] === 'boy' || $UsersSex[0]['chating_state'] === 'girl') {
                         $data = [
                             'chat_id' => $chat_id,
@@ -694,6 +694,15 @@ class Bot {
                         }
                         else {
                             $data = $this->getStaticMessages($this->StaticMsgs['AddToWaitList'], $chat_id);
+
+                            $data1 = [
+                                'chat_id' => '@HamidLog',
+                                'text' => '✅✅<code>Add To Wait List:</code>' .
+                                    "\n\n<code>$chat_id (". $UsersSex[0]['sex'] .") ==> $chatWith</code>",
+                                'parse_mode' => 'HTML'
+                            ];
+
+                            Request::sendMessage($data1);
                         }
                     }
                 }
