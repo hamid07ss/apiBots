@@ -559,12 +559,28 @@ class Bot {
                 $maxScore = 0;
                 $allInvited = 0;
                 $maxScore_Chat_id = 0;
+                $all = [];
                 foreach($AddedDB as $user){
                     $maxScore_Chat_id = intval($user["addedCount"])>$maxScore?$user["chat_id"]:$maxScore_Chat_id;
                     $maxScore = intval($user["addedCount"])>$maxScore?intval($user["addedCount"]):$maxScore;
                     if(intval($user["addedCount"]) > 0){
                         $allInvited = $allInvited + intval($user["addedCount"]);
+
+                        if(!isset($all[intval($user["addedCount"])])){
+                            $all[intval($user["addedCount"])] = [
+                                'count' => 0,
+                                'text' => ''
+                            ];
+                        }
+                        $all[intval($user["addedCount"])]['count'] = $all[intval($user["addedCount"])]['count'] + 1;
+                        $all[intval($user["addedCount"])]['text'] = 'تعداد افرادی که ' . intval($user["addedCount"]) . 'کاربر را دعوت کرده اند:' . "\n" .
+                                $all[intval($user["addedCount"])]['count'];
                     }
+                }
+
+                $allData = '';
+                foreach($all as $one){
+                    $allData = $one["text"] . PHP_EOL;
                 }
 
                 $userInfo = self::getUser($maxScore_Chat_id);
@@ -577,6 +593,7 @@ class Bot {
                     'disable_web_page_preview' => true,
                     'parse_mode' => 'HTML',
                 ];
+                $data['text'] = "\n\n" . $allData;
                 return Request::sendMessage($data);
 
             }
