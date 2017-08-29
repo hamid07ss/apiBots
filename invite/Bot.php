@@ -580,7 +580,7 @@ class Bot {
 
                 $allData = '';
                 foreach($all as $one){
-                    $allData = $one["text"] . PHP_EOL;
+                    $allData .= $one["text"] . PHP_EOL;
                 }
 
                 $userInfo = self::getUser($maxScore_Chat_id);
@@ -593,7 +593,7 @@ class Bot {
                     'disable_web_page_preview' => true,
                     'parse_mode' => 'HTML',
                 ];
-                $data['text'] = "\n\n" . $allData;
+                $data['text'] .= "\n\n" . $allData;
                 return Request::sendMessage($data);
 
             }
