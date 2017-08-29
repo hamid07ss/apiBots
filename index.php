@@ -42,8 +42,7 @@ try {
     // Handle telegram getUpdate request
     do {
         $data = $telegram->handleGetUpdates(100, 0);
-        print_r(count($data->getResult()));
-        if(count($data->getResult())) {
+        if(count($data->getResult()) > 0) {
             foreach ((array) $data->getResult() as $result) {
                 $bot->handleMessages($result);
             }
