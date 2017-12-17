@@ -486,13 +486,12 @@ class Bot {
                             foreach($Bots as $bot) {
                                 $botName = basename($bot);
                                 preg_match_all('/bot-(.*).session/', $botName, $botNum);
-                                $DBName = $this->DBs["SuperGroups"] + $botNum[1][0];
+                                $DBName = $this->DBs["SuperGroups"] . $botNum[1][0];
 
                                 $Links[$botNum[1][0]] = $redis->scard($DBName);
                             }
-                            ksort($Links);
                             foreach($Links as $index => $link) {
-                                $text .= "\n<b>" . $this->GetNumberSticker($index, true) . "</b><code>=> SGP=> </code><b>" . $this->GetNumberSticker($link, true) . "</b>";
+                                $text .= "\n<b>" . $index . "</b><code>=> SGP=> </code><b>" . $this->GetNumberSticker($link, true) . "</b>";
                                 $text .= "*️⃣<code>join=></code> " . ($redis->get('bot' . $index . 'canJoin') ? '✅️' : '❌');
                             }
                         }
