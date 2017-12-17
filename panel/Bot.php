@@ -55,6 +55,23 @@ class Bot {
 	public $DBs = [
         'TelethonWaitLinks' => 'TelethonWaitLinks',
         'TelethonGoodLinks' => 'TelethonGoodLinks',
+        "Admins" => 'TelethonAdmins',
+        "AllLinks" => 'TelethonAllLinks',
+        "ErrorLogs" => 'TelethonErrorLogs',
+        "SuperGroups" => 'TelethonSuperGroupsList',
+        "Privates" => 'TelethonPrivatesList',
+        "CheckLinkLimit" => 'TelethonCheckLinkLimit',
+        "JoinLinkLimit" => 'TelethonJoinLinkLimit',
+        "AutoJoinLink" => 'TelethonAutoJoinLink',
+        "AutoCheckLink" => 'TelethonAutoCheckLink',
+        "ForwardMessageGroupsCount" => 'TelethonForwardMessageGroupsCount',
+        "ForwardMessagePrivatesCount" => 'TelethonForwardMessagePrivatesCount',
+        "ForwardMessageGroups" => 'TelethonForwardMessageGroups',
+        "ForwardMessagePrivates" => 'TelethonForwardMessagePrivates',
+        "ForwardMessageMsgId" => 'TelethonForwardMessageMsgId',
+        "ForwardMessageMsgTxt" => 'TelethonForwardMessageMsgTxt',
+        "ForwardMessagePeerId" => 'TelethonForwardMessagePeerId',
+        "GetDialogsRequest" => 'TelethonGetDialogsRequest',
     ];
 
     public $StaticBtns = [
@@ -455,7 +472,7 @@ class Bot {
 
                     case 'SuperGroup':
                     case 'Links':
-                        $Bots = glob('/home/ubuntu131/tabchi/newTabchi/tabchi-*.lua');
+                        $Bots = glob('/root/tabchi/Telethon/bot-*.session');
                         $Links = [];
                         $title = ($result->getCallbackQuery()->getData() === 'Links') ?
                             'Bots Links' : 'Bots Super Groups';
@@ -468,8 +485,8 @@ class Bot {
                         else {
                             foreach($Bots as $bot) {
                                 $botName = basename($bot);
-                                preg_match_all('!\d+!', $botName, $botNum);
-                                $DBName = 'bot' . $botNum[0][0] . 'sgps:';
+                                preg_match_all('/bot-(.*).session/', $botName, $botNum);
+                                $DBName = 'bot' . $botNum[0][1] . 'sgps:';
 
                                 $Links[intval($botNum[0][0])] = $redis->scard($DBName);
                             }
