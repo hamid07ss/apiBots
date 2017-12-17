@@ -307,13 +307,8 @@ class Bot {
 
         try {
             $redis = new Client();
-
-            $parameters = array(
-                'host'     => '127.0.0.1',
-                'port'     => 6379,
-                'database' => 1
-            );
-            $redis_ = new Client($parameters);
+            $redis_ = new Client();
+            $redis_->select(1);
 
 
             if($result->getMessage()){
