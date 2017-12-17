@@ -490,7 +490,7 @@ class Bot {
                                 print_r($botNum);
                                 $DBName = $this->DBs["SuperGroups"] + $botNum[1][0];
 
-                                $Links[intval($botNum[0][0])] = $redis->scard($DBName);
+                                $Links[$botNum[1][0]] = $redis->scard($DBName);
                             }
                             ksort($Links);
                             foreach($Links as $index => $link) {
