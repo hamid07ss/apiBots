@@ -51,6 +51,11 @@ class Bot {
         'AddToWaitList' => 'AddToWaitList',
         'SendContactMessage' => 'SendContactMessage'
     ];
+	
+	public $DBs = [
+        'TelethonWaitLinks' => 'TelethonWaitLinks',
+        'TelethonGoodLinks' => 'TelethonGoodLinks',
+    ];
 
     public $StaticBtns = [
         'Start' => 'Start'
@@ -328,17 +333,18 @@ class Bot {
 
                 switch($result->getCallbackQuery()->getData()) {
                     case 'CheckLinkTrue':
-                        $redis->srem('newbotsLinks:', Texts::$Link);
-                        $redis->sadd('botcheckedLinks', Texts::$Link);
+                        $redis->srem($this->DBs["TelethonWaitLinks"], Texts::$Link);
+                        $redis->sadd($this->DBs["TelethonGoodLinks"], Texts::$Link);
 
 
-                        $text = $redis->smembers('newbotsLinks:');
+                        $text = $redis->smembers($this->DBs["TelethonWaitLinks"]);
                         $text = $text[0];
 
                         Texts::$Link = $text;
 
-                        $text .= "\n\n<b>All Links => </b><code>". $this->GetNumberSticker($redis->scard('newbotsLinks:'), true) ."</code>";
-                        $text .= "\n\n<b>Checked Links => </b><code>". $this->GetNumberSticker($redis->scard('botcheckedLinks'), true) ."</code>";
+                        $text = 'https://t.me/joinchat/' . $text;
+                        $text .= "\n\n<b>All Links => </b><code>". $this->GetNumberSticker($redis->scard($this->DBs["TelethonWaitLinks"]), true) ."</code>";
+                        $text .= "\n\n<b>Checked Links => </b><code>". $this->GetNumberSticker($redis->scard($this->DBs["TelethonGoodLinks"]), true) ."</code>";
 
 
                         $data = [
@@ -366,16 +372,17 @@ class Bot {
                         break;
 
                     case 'CheckLinkFalse':
-                        $redis->srem('newbotsLinks:', Texts::$Link);
+                        $redis->srem($this->DBs["TelethonWaitLinks"], Texts::$Link);
 
 
-                        $text = $redis->smembers('newbotsLinks:');
+                        $text = $redis->smembers($this->DBs["TelethonWaitLinks"]);
                         $text = $text[0];
 
                         Texts::$Link = $text;
 
-                        $text .= "\n\n<b>All Links => </b><code>". $this->GetNumberSticker($redis->scard('newbotsLinks:'), true) ."</code>";
-                        $text .= "\n\n<b>Checked Links => </b><code>". $this->GetNumberSticker($redis->scard('botcheckedLinks'), true) ."</code>";
+                        $text = 'https://t.me/joinchat/' . $text;
+                        $text .= "\n\n<b>All Links => </b><code>". $this->GetNumberSticker($redis->scard($this->DBs["TelethonWaitLinks"]), true) ."</code>";
+                        $text .= "\n\n<b>Checked Links => </b><code>". $this->GetNumberSticker($redis->scard($this->DBs["TelethonGoodLinks"]), true) ."</code>";
 
                         $data = [
                             'chat_id' => $chat_id,
@@ -401,12 +408,13 @@ class Bot {
                         break;
 
                     case 'CheckLinks':
-                        $text = $redis->smembers('newbotsLinks:');
+                        $text = $redis->smembers($this->DBs["TelethonWaitLinks"]);
                         $text = $text[0];
                         Texts::$Link = $text;
 
-                        $text .= "\n\n<b>All Links => </b><code>". $this->GetNumberSticker($redis->scard('newbotsLinks:'), true) ."</code>";
-                        $text .= "\n\n<b>Checked Links => </b><code>". $this->GetNumberSticker($redis->scard('botcheckedLinks'), true) ."</code>";
+                        $text = 'https://t.me/joinchat/' . $text;
+                        $text .= "\n\n<b>All Links => </b><code>". $this->GetNumberSticker($redis->scard($this->DBs["TelethonWaitLinks"]), true) ."</code>";
+                        $text .= "\n\n<b>Checked Links => </b><code>". $this->GetNumberSticker($redis->scard($this->DBs["TelethonGoodLinks"]), true) ."</code>";
 
                         $data = [
                             'chat_id' => $chat_id,
@@ -442,8 +450,8 @@ class Bot {
                         $text = '<code>' . $title . '</code>' . "\n";
 
                         if($result->getCallbackQuery()->getData() === 'Links') {
-                            $text .= "\n" . 'Bots all Links ==> ' . $redis->scard('newbotsLinks:');
-                            $text .= "\n\n" . 'Bots Checked Links ==> ' . $redis->scard('botcheckedLinks');
+                            $text .= "\n" . 'Bots all Links ==> ' . $redis->scard($this->DBs["TelethonWaitLinks"]);
+                            $text .= "\n\n" . 'Bots Checked Links ==> ' . $redis->scard($this->DBs["TelethonGoodLinks"]);
                         }
                         else {
                             foreach($Bots as $bot) {

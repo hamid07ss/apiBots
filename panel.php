@@ -7,7 +7,7 @@
  */
 
 
-require "/root/phpBot/predis/autoload.php";
+require __DIR__ . "/predis/autoload.php";
 require __DIR__ . '/vendor/autoload.php';
 require __DIR__ . '/panel/DB/DB_.php';
 require __DIR__ . '/panel/Strings/Texts.php';
