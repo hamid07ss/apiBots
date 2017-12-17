@@ -266,9 +266,21 @@ class Bot {
             ]),
         ];
 
+        $keyboard_buttons0 = [
+            new InlineKeyboardButton([
+                'text' => 'Restart',
+                'callback_data' => 'Restart',
+            ]),
+            new InlineKeyboardButton([
+                'text' => 'Update Code',
+                'callback_data' => 'Update Code',
+            ])
+        ];
+
         $data['reply_markup'] = new InlineKeyboard($keyboard_buttons);
         $data["reply_markup"]->inline_keyboard[1] = $keyboard_buttons2;
         $data["reply_markup"]->inline_keyboard[2] = $keyboard_buttons1;
+        $data["reply_markup"]->inline_keyboard[3] = $keyboard_buttons0;
 
         return $data["reply_markup"];
     }
@@ -501,6 +513,29 @@ class Bot {
                             'parse_mode' => 'HTML',
                         ];
 
+                        break;
+
+                    case 'Update Code':
+                        $out = shell_exec('cd /root/tabchi/Telethon/ && git pull git master');
+
+                        $data = [
+                            'chat_id' => $chat_id,
+                            'text' => "Updated: \n" . $out,
+                            'message_id' => $result->getCallbackQuery()->getMessage()->getMessageId(),
+                            'parse_mode' => 'HTML',
+                        ];
+                        break;
+
+                    case 'Restart':
+                        $out = shell_exec('tmux kill-session -t autolaunch');
+                        $out += shell_exec('cd /root/tabchi/Telethon/ && tmux new-session -d -s autolaunch ./auto start');
+
+                        $data = [
+                            'chat_id' => $chat_id,
+                            'text' => "restarted: \n" . $out,
+                            'message_id' => $result->getCallbackQuery()->getMessage()->getMessageId(),
+                            'parse_mode' => 'HTML',
+                        ];
                         break;
 
                     case 'JoinOff':
