@@ -307,6 +307,9 @@ class Bot {
 
         try {
             $redis = new Client();
+            $redis_ = new Client(array(
+                'database' => 1
+            ));
 
 
             if($result->getMessage()){
@@ -488,11 +491,11 @@ class Bot {
                                 preg_match_all('/bot-(.*).session/', $botName, $botNum);
                                 $DBName = $this->DBs["SuperGroups"] . $botNum[1][0];
 
-                                $Links[$botNum[1][0]] = $redis->scard($DBName);
+                                $Links[$botNum[1][0]] = $redis_->scard($DBName);
                             }
                             foreach($Links as $index => $link) {
                                 $text .= "\n<b>" . $index . "</b><code>=> SGP=> </code><b>" . $this->GetNumberSticker($link, true) . "</b>";
-                                $text .= "*️⃣<code>join=></code> " . ($redis->get('bot' . $index . 'canJoin') ? '✅️' : '❌');
+                                $text .= "*️⃣<code>join=></code> " . ($redis->get($this->DBs["SuperGroups"] . $index));
                             }
                         }
 
