@@ -486,7 +486,8 @@ class Bot {
                             foreach($Bots as $bot) {
                                 $botName = basename($bot);
                                 preg_match_all('/bot-(.*).session/', $botName, $botNum);
-                                $DBName = $this->DBs["SuperGroups"] + $botNum[0][1];
+                                print_r('$botNum ==> ' . $botNum);
+                                $DBName = $this->DBs["SuperGroups"] + $botNum[1][0];
 
                                 $Links[intval($botNum[0][0])] = $redis->scard($DBName);
                             }
