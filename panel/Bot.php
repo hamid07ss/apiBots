@@ -307,7 +307,9 @@ class Bot {
 
         try {
             $redis = new Client();
-            $redis_ = new Client(array(
+            $redis_ = new Client($parameters = array(
+                'host'     => '127.0.0.1',
+                'port'     => 6379,
                 'database' => 1
             ));
 
