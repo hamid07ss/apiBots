@@ -307,9 +307,6 @@ class Bot {
 
         try {
             $redis = new Client();
-            $redis_ = new Client();
-            $redis_->select(1);
-
 
             if($result->getMessage()){
                 $type = $result->getMessage();
@@ -489,15 +486,12 @@ class Bot {
                                 $botName = basename($bot);
                                 preg_match_all('/bot-(.*).session/', $botName, $botNum);
                                 $DBName = $this->DBs["SuperGroups"] . $botNum[1][0];
-                                print_r($DBName);
-                                print_r($redis_->scard($DBName));
-                                print_r(PHP_EOL);
 
-                                $Links[$botNum[1][0]] = $redis_->scard($DBName);
+                                $Links[$botNum[1][0]] = count(json_decode($redis->get($DBName)));
                             }
                             foreach($Links as $index => $link) {
                                 $text .= "\n<b>" . $index . "</b><code>=> SGP=> </code><b>" . $this->GetNumberSticker($link, true) . "</b>";
-                                $text .= "*️⃣<code>join=></code> " . ($redis->get($this->DBs["SuperGroups"] . $index));
+                                $text .= "*️⃣<code>join=></code> " . ($redis->get($this->DBs["AutoJoinLink"] . $index));
                             }
                         }
 
