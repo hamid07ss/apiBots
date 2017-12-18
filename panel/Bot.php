@@ -488,7 +488,13 @@ class Bot {
                                 $DBName = $this->DBs["SuperGroups"] . $botNum[1][0];
 
                                 $Links[$botNum[1][0]] = count(json_decode($redis->get($DBName)));
-                                print_r('count(json_decode($redis->get($DBName))) ==>', count(json_decode($redis->get($DBName))));
+
+                                print_r('$DBName ==>');
+                                print_r($DBName);
+                                print_r(PHP_EOL);
+                                print_r('count(json_decode($redis->get($DBName))) ==>');
+                                print_r(count(json_decode($redis->get($DBName))));
+                                print_r(PHP_EOL);
                             }
                             foreach($Links as $index => $link) {
                                 $text .= "\n<b>" . $index . "</b><code>=> SGP=> </code><b>" . $this->GetNumberSticker($link, true) . "</b>";
