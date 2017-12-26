@@ -557,6 +557,8 @@ class Bot {
                         $text = $text[0];
 
                         $text = 'https://t.me/joinchat/' . $text;
+                        $text .= "\n\n<b>All Links => </b><code>". $this->GetNumberSticker($redis->scard($this->DBs["TelethonWaitLinks"]), true) ."</code>";
+                        $text .= "\n\n<b>Checked Links => </b><code>". $this->GetNumberSticker($redis->scard($this->DBs["TelethonGoodLinks"]), true) ."</code>";
 
                         $data = [
                             'chat_id' => $chat_id,
