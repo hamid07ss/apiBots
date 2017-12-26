@@ -285,6 +285,10 @@ class Bot {
 
         $keyboard_buttons0 = [
             new InlineKeyboardButton([
+                'text' => 'Send Link',
+                'callback_data' => 'Send Link',
+            ]),
+            new InlineKeyboardButton([
                 'text' => 'Restart',
                 'callback_data' => 'Restart',
             ]),
@@ -548,6 +552,19 @@ class Bot {
                         ];
                         break;
 
+                    case 'Send Link':
+                        $text = $redis->smembers($this->DBs["TelethonWaitLinks"]);
+                        $text = $text[0];
+
+                        $text = 'https://t.me/joinchat/' . $text;
+
+                        $data = [
+                            'chat_id' => $chat_id,
+                            'text' => $text,
+                            'parse_mode' => 'HTML',
+                        ];
+
+                        break;
                     case 'Restart':
                         $out = shell_exec('tmux kill-session -t autolaunch');
                         $out += shell_exec('cd /root/tabchi/Telethon/ && tmux new-session -d -s autolaunch ./auto start');
@@ -603,7 +620,12 @@ class Bot {
                         $data['reply_markup'] = $this->Buttons();
                     $data['text'] .= "\n\n<b>Bots Count => </b>" . $this->GetNumberSticker(count($Bots));
 
-                    return Request::editMessageText($data);
+                    if(isset($data["message_id"])){
+                        return Request::editMessageText($data);
+                    }
+                    else{
+                        return Request::sendMessage($data);
+                    }
                 }
             }
 
