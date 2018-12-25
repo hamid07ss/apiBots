@@ -174,6 +174,7 @@ class Bot
                     'text' => 'Send To Channel',
                     'callback_data' => json_encode([
                         'action' => "SendProxy",
+                        'server' => $proxyP['server'],
                     ]),
                     /*'callback_data' => json_encode([
                         'action' => "SendProxy",
