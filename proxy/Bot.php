@@ -33,9 +33,9 @@ class Bot
     {
         Autoloader::register();
         if ($result->getMessage()) {
-            if($this->telegram->isAdmin()){
+            if ($this->telegram->isAdmin()) {
                 $this->AdminsMessages($result);
-            }else{
+            } else {
                 $this->UsersMessages($result);
             }
         }
@@ -95,25 +95,26 @@ class Bot
         return false;
     }
 
-    public function Proxy($link){
+    public function Proxy($link)
+    {
         $url = parse_url($link);
         parse_str($url['query'], $params);
-        return "*New Proxy*
-        
-        *Server*: $params->server
-        *Port*: $params->port
-        *Secret*: $params->secret
-        
-        [Click to Connect Proxy]($link)
-        
-        @IRProxyTel
-        ";
+        var_dump($url);
+        print("\n");
+        var_dump($params);
+        return "*New Proxy*\n\n" .
+            "*Server*: $params->server" .
+            "*Port*: $params->port" .
+            "*Secret*: $params->secret\n\n" .
+            "[Click to Connect Proxy]($link)\n" .
+            "@IRProxyTel";
     }
 
-    public function isProxy($link){
+    public function isProxy($link)
+    {
         $link = parse_url($link);
         parse_str($link['query'], $params);
-        if($params["server"] && $params["secret"]){
+        if ($params["server"] && $params["secret"]) {
             return true;
         }
 
@@ -125,7 +126,7 @@ class Bot
         print("This is Admin");
         $message = $result->getMessage()->getText();
         $chat_id = $result->getMessage()->getChat()->getId();
-        if($this->isProxy($message)){
+        if ($this->isProxy($message)) {
             $proxy = $message;
             $text = $this->Proxy($proxy);
             $keyboard_buttons = [
