@@ -141,6 +141,7 @@ class Bot
                 'text' => $text,
                 'reply_markup' => new InlineKeyboard($keyboard_buttons),
             ];
+            $data['parse_mode'] = 'Markdown';
 
             return Request::sendMessage($data);
         }
