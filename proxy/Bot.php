@@ -173,6 +173,8 @@ class Bot
                 new InlineKeyboardButton([
                     'text' => 'Send To Channel',
                     'callback_data' => json_encode([
+                        'action' => "SendProxy",
+                        'server' => $proxyP['server'],
                         'secret' => $proxyP['secret']
                     ]),
                     /*'callback_data' => json_encode([
