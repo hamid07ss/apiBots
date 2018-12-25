@@ -160,8 +160,8 @@ class Bot
 
             $buttons = [
                 new InlineKeyboardButton([
-                    'text' => 'Connect to Proxy',
-                    'url' => $this->createProxyLink($proxyP),
+                    'text' => 'c',//'Connect to Proxy',
+                    'url' => 'c'//$this->createProxyLink($proxyP),
                 ]),
             ];
 
@@ -177,7 +177,7 @@ class Bot
                 new InlineKeyboardButton([
                     'text' => 'Send',
                     'callback_data' => json_encode([
-//                        'server' => $proxyP['server'],
+                        'server' => $proxyP['server'],
                         'port' => $proxyP['port'],
                         'secret' => $proxyP['secret'],
                     ]),
