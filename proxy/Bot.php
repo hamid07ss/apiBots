@@ -147,7 +147,7 @@ class Bot
                     'callback_data' => json_encode([
                         'action' => "SendProxy",
                         'data' => [
-                            'AnswerTo' => 0
+                            'text' => $text
                         ]
                     ]),
                 ]),
