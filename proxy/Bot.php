@@ -128,30 +128,29 @@ class Bot
         if ($this->isProxy($message)) {
             $proxy = $message;
             $text = $this->Proxy($proxy);
-            $buttons = new InlineKeyboardButton([
-                'text' => 'Connect to Proxy',
-                'url' => $message,
-            ]);
+            $buttons = [
+                new InlineKeyboardButton([
+                    'text' => 'Connect to Proxy',
+                    'url' => $message,
+                ]),
+                new InlineKeyboardButton([
+                    'text' => 'Send To Channel',
+                    'callback_data' => json_encode([
+                        "action" => "SendProxy",
+                        "data" => [
+                            "text"=> $text,
+                            "link"=> $message
+                        ]
+                    ]),
+                ]),
+            ];
 
             $data = [
                 'chat_id' => $chat_id,
                 'text' => $text,
-                'reply_markup' => new InlineKeyboard([$buttons]),
+                'reply_markup' => new InlineKeyboard($buttons),
             ];
             $data['parse_mode'] = 'Markdown';
-
-            $extra_buttons = new InlineKeyboardButton([
-                'text' => 'Send To Channel',
-                'callback_data' => json_encode([
-                    "action" => "SendProxy",
-                    "data" => $data
-                ]),
-            ]);
-
-            $data['reply_markup'] = new InlineKeyboard([
-                $buttons,
-                $extra_buttons
-            ]);
 
             print(json_encode($data, JSON_PRETTY_PRINT));
             return Request::sendMessage($data);
