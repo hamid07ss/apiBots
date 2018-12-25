@@ -136,12 +136,6 @@ class Bot
         if ($this->isProxy($message)) {
             $proxy = $message;
             $text = $this->Proxy($proxy);
-            $callback_data = new \stdClass();
-            $callback_data->action = "SendProxy";
-
-            $callback_data->data = new \stdClass();
-            $callback_data->data->text = $text;
-            $callback_data->data->link = $message;
 
             $buttons = [
                 new InlineKeyboardButton([
@@ -150,7 +144,13 @@ class Bot
                 ]),
                 new InlineKeyboardButton([
                     'text' => 'Send To Channel',
-                    'callback_data' => json_encode($callback_data),
+                    'callback_data' => json_encode([
+                        'action' => "SendProxy",
+                        'data' => [
+                            'text' => $text,
+                            'link' => $message
+                        ]
+                    ])
                 ]),
             ];
 
