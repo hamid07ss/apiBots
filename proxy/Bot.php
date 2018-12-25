@@ -102,11 +102,11 @@ class Bot
         var_dump($url);
         print("\n");
         var_dump($params);
-        return "*New Proxy*\n\n" .
-            "\n*Server*: ". $params['server'] .
-            "\n*Port*: ". $params['port'] .
-            "\n*Secret*: ". $params['secret'] .
-            "\n\n[Click to Connect Proxy]($link)\n" .
+        return "*New Proxy:*\n\n" .
+            "*Server*: `". $params['server'] ."`".
+            "\n*Port*: `". $params['port'] ."`".
+            "\n*Secret*: `". $params['secret'] ."`".
+            "\n\n• *Click to Connect*: [Proxy]($link)\n" .
             "@IRProxyTel";
     }
 
