@@ -110,16 +110,17 @@ class Bot
     {
         $url = parse_url($link);
         parse_str($url['query'], $params);
+        $link = $this->createProxyLink($params);
         return "*New Proxy:*\n\n" .
             "*Server*: `" . $params['server'] . "`" .
             "\n*Port*: `" . $params['port'] . "`" .
             "\n*Secret*: `" . $params['secret'] . "`" .
-            "\n\n• *Click to Connect*: [Proxy]($link) | [Channel](https://t.me/IRProxyTel)";
+            "\n\n• *Click*: [Connect Proxy]($link) | [Channel](https://t.me/IRProxyTel)";
     }
 
     public function createProxyLink($params)
     {
-        $link = 'https://t.me/proxy?server='. $params['server'] .'&port='. $params['port'] .'&secret='. $params['secret'];
+        $link = 'tg://proxy?server='. $params['server'] .'&port='. $params['port'] .'&secret='. $params['secret'];
         return $link;
     }
 
@@ -153,12 +154,13 @@ class Bot
         if ($this->isProxy($message)) {
             $proxy = $message;
             $proxyP = $this->ProxyParams($message);
+            $link = $this->createProxyLink($proxyP);
             $text = $this->ProxyText($proxy);
 
             $buttons = [
                 new InlineKeyboardButton([
                     'text' => 'Connect to Proxy',
-                    'url' => $message,
+                    'url' => $this->createProxyLink($proxyP),
                 ]),
             ];
 
@@ -174,7 +176,7 @@ class Bot
                     'text' => 'Send',
                     'callback_data' => json_encode([
                         'action' => "SendProxy",
-                        'link' => $message,
+                        'link' => $this->createProxyLink($proxyP),
 //                        'server' => $proxyP['server'],
 //                        'secret' => $proxyP['secret']
                     ]),
