@@ -176,7 +176,7 @@ class Bot
                     'text' => 'Send',
                     'callback_data' => json_encode([
                         'action' => "SendProxy",
-                        'link' => "tg://proxy?server=single.ir-pro-tel.us&port=1425&secret=dd3fafdea89ab71e46a207"
+                        'link' => "tg://proxy?server=single.ir-pro-tel.us"
                             //$this->createProxyLink($proxyP),
 //                        'server' => $proxyP['server'],
 //                        'secret' => $proxyP['secret']
