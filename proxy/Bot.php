@@ -170,10 +170,10 @@ class Bot
                 'text' => $text,
                 'disable_web_page_preview' => true,
                 'parse_mode' => "Markdown",
-                'reply_markup' => new InlineKeyboard($buttons),
+//                'reply_markup' => new InlineKeyboard($buttons),
             ];
 
-            $data["reply_markup"]->inline_keyboard[1] = [
+            /*$data["reply_markup"]->inline_keyboard[1] = [
                 new InlineKeyboardButton([
                     'text' => 'Send',
                     'callback_data' => json_encode([
@@ -182,7 +182,18 @@ class Bot
                         'secret' => $proxyP['secret'],
                     ]),
                 ])
-            ];
+            ];*/
+
+            /*$data["reply_markup"] = [
+                "inline_keyboard" => [
+                    [
+                        [
+                            "text" => "c",
+                            "url" => "c",
+                        ]
+                    ]
+                ]
+            ];*/
 
             var_dump(json_encode($data));
             var_dump(Request::sendMessage($data));
