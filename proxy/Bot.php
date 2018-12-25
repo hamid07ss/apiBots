@@ -174,6 +174,12 @@ class Bot
             ];
 
             var_dump($text);
+            var_dump(json_encode([
+                'action' => "SendProxy",
+                'data' => [
+                    'text' => $text
+                ]
+            ]));
             var_dump(Request::sendMessage($data));
             return true;
         }
