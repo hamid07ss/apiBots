@@ -184,7 +184,6 @@ class Bot
                 ])
             ];
 
-            unset($data["reply_markup"]->raw_data);
             var_dump(json_encode($data));
             var_dump(Request::sendMessage($data));
             return true;
