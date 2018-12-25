@@ -153,7 +153,7 @@ class Bot
                 $extra_buttons
             ]);
 
-            var_dump($data);
+            print(json_encode($data, JSON_PRETTY_PRINT));
             return Request::sendMessage($data);
         }
 
