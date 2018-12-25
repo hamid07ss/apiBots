@@ -167,12 +167,13 @@ class Bot
                     'callback_data' => json_encode([
                         'action' => "SendProxy",
                         'data' => [
-                            'text' => json_encode($text)
+                            'text' => $text
                         ]
                     ]),
                 ])
             ];
 
+            var_dump($text);
             var_dump(Request::sendMessage($data));
             return true;
         }
