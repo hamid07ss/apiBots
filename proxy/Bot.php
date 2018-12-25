@@ -90,11 +90,11 @@ class Bot
                 print("SendProxy");
                 $data = [];
                 $data['chat_id'] = "@IRProxyTel";
-                $data['text'] = $this->Proxy(urldecode($callbackData->link));
+                $data['text'] = $this->Proxy($callbackData->link);
                 $data['reply_markup'] = new InlineKeyboard([
                     new InlineKeyboardButton([
                         'text' => 'Connect to Proxy',
-                        'url' => urldecode($callbackData->link),
+                        'url' => $callbackData->link,
                     ]),
                 ]);
                 var_dump($callbackData->data);
@@ -156,14 +156,14 @@ class Bot
                     'text' => 'Send To Channel',
                     'callback_data' => json_encode([
                         'action' => "SendProxy",
-                        'link' => urlencode($message)
+                        'link' => $message
                     ]),
                 ])
             ];
 
             var_dump(json_encode([
                 'action' => "SendProxy",
-                'link' => urlencode($message)
+                'link' => $message
             ]));
             var_dump(Request::sendMessage($data));
             return true;
