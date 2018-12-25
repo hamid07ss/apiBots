@@ -187,9 +187,7 @@ class Bot
                 ])
             ];
 
-            var_dump(json_encode([
-                'secret' => $proxyP['secret']
-            ]));
+            var_dump(json_encode($data));
             var_dump(Request::sendMessage($data));
             return true;
         }
