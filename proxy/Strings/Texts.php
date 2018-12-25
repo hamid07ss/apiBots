@@ -11,6 +11,7 @@ namespace Longman\TelegramBot;
 class Texts {
     
     public static $What_To_Do = [];
+    public static $state = '';
     public static $Link = '';
 
     public static $Girl = 'دختر';

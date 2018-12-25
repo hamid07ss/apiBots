@@ -18,6 +18,7 @@ use Longman\TelegramBot\Entities\KeyboardButton;
 use Longman\TelegramBot\Entities\Update;
 use Longman\TelegramBot\Entities\Chat;
 use Longman\TelegramBot\DB_;
+use Longman\TelegramBot\Texts;
 use function PHPSTORM_META\type;
 
 class Bot
@@ -87,7 +88,33 @@ class Bot
         switch ($callbackData->action) {
             case "SendProxy":
                 print("SendProxy");
+                Texts::$state = 'SendProxy';
                 break;
+        }
+
+        return false;
+    }
+
+    public function Proxy($link){
+        $url = parse_url($link);
+        parse_str($url['query'], $params);
+        return "*New Proxy*
+        
+        *Server*: $params->server
+        *Port*: $params->port
+        *Secret*: $params->secret
+        
+        [Click to Connect Proxy]($link)
+        
+        @IRProxyTel
+        ";
+    }
+
+    public function isProxy($link){
+        $link = parse_url($link);
+        parse_str($link['query'], $params);
+        if($params["server"] && $params["secret"]){
+            return true;
         }
 
         return false;
@@ -96,6 +123,32 @@ class Bot
     public function AdminsMessages(Update $result)
     {
         print("This is Admin");
+        $message = $result->getMessage()->getText();
+        $chat_id = $result->getMessage()->getChat()->getId();
+        if($this->isProxy($message)){
+            $proxy = $message;
+            $text = $this->Proxy($proxy);
+            $keyboard_buttons = [
+                new InlineKeyboardButton([
+                    'text' => 'Connect to Proxy',
+                    'url' => $message,
+                ]),
+            ];
+
+            $data = [
+                'chat_id' => $chat_id,
+                'text' => $text,
+                'reply_markup' => new InlineKeyboard($keyboard_buttons),
+            ];
+
+            return Request::sendMessage($data);
+        }
+
+        $data = [
+            'chat_id' => $chat_id,
+            'text' => 'What????',
+        ];
+        return Request::sendMessage($data);
     }
 
     public function UsersMessages(Update $result)
