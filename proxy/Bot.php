@@ -175,6 +175,7 @@ class Bot
                     'callback_data' => json_encode([
                         'action' => "SendProxy",
                         'server' => $proxyP['server'],
+                        'port' => $proxyP['port'],
                     ]),
                     /*'callback_data' => json_encode([
                         'action' => "SendProxy",
