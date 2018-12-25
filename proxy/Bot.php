@@ -111,7 +111,6 @@ class Bot
         $url = parse_url($link);
         parse_str($url['query'], $params);
         $link = $this->createProxyLink($params);
-        return "Hamid";
         return "*New Proxy:*\n\n" .
             "*Server*: `" . $params['server'] . "`" .
             "\n*Port*: `" . $params['port'] . "`" .
@@ -177,6 +176,8 @@ class Bot
                 new InlineKeyboardButton([
                     'text' => 'Send',
                     'callback_data' => json_encode([
+                        'server' => $proxyP['server'],
+                        'port' => $proxyP['port'],
                         'secret' => $proxyP['secret'],
                     ]),
                 ])
