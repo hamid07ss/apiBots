@@ -102,9 +102,6 @@ class Bot
     {
         $url = parse_url($link);
         parse_str($url['query'], $params);
-        var_dump($url);
-        print("\n");
-        var_dump($params);
         return "*New Proxy:*\n\n" .
             "*Server*: `" . $params['server'] . "`" .
             "\n*Port*: `" . $params['port'] . "`" .
@@ -156,6 +153,7 @@ class Bot
                 $extra_buttons
             ]);
 
+            var_dump($data);
             return Request::sendMessage($data);
         }
 
