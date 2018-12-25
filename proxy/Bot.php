@@ -152,8 +152,8 @@ class Bot
             ];
             $data['parse_mode'] = 'Markdown';
 
-            print(json_encode($data, JSON_PRETTY_PRINT));
-            return Request::sendMessage($data);
+            var_dump(Request::sendMessage($data));
+            return true;
         }
 
         $data = [
