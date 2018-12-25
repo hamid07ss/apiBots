@@ -121,7 +121,7 @@ class Bot
 
     public function createProxyLink($params)
     {
-        $link = 'tg://proxy?server=' . $params['server'] . '&port=' . $params['port'] . '&secret=' . $params['secret'];
+        $link = 'tg://proxy?server='. $params['server'] .'&port='. $params['port'] .'&secret='. $params['secret'];
         return $link;
     }
 
@@ -183,18 +183,20 @@ class Bot
                     ]),
                 ])
             ];*/
-
-            $data["reply_markup"] = [
-                "inline_keyboard" => [
+            $data["reply_markup"] = json_encode([
+                'inline_keyboard' => [
                     [
-                        [
-                            "text" => "c",
-                            "url" => "c",
-                        ]
-                    ]
-                ]
-            ];
-
+                        ['text' => "Connect", 'url' => "$proxy"]
+                    ],
+                    [
+                        ['text' => "Send to Channel", 'callback_data' => [
+                            'server' => $proxyP['server'],
+                            'port' => $proxyP['port'],
+                            'secret' => $proxyP['secret'],
+                        ]],
+                    ],
+                ],
+            ]);
             var_dump(json_encode($data));
             var_dump(Request::sendMessage($data));
             return true;
