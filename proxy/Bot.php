@@ -142,7 +142,7 @@ class Bot
                     'text' => 'Connect to Proxy',
                     'url' => $message,
                 ]),
-                new InlineKeyboardButton([
+                /*new InlineKeyboardButton([
                     'text' => 'Send To Channel',
                     'callback_data' => json_encode([
                         'action' => "SendProxy",
@@ -151,7 +151,7 @@ class Bot
                             'link' => $message
                         ]
                     ])
-                ]),
+                ]),*/
             ];
 
             $data = [
