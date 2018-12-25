@@ -88,7 +88,10 @@ class Bot
         switch ($callbackData->action) {
             case "SendProxy":
                 print("SendProxy");
-                Texts::$state = 'SendProxy';
+                $callbackData->data['chat_id'] = "@IRProxyTel";
+                var_dump($callbackData->data);
+                Request::sendMessage($callbackData->data);
+
                 break;
         }
 
@@ -103,11 +106,10 @@ class Bot
         print("\n");
         var_dump($params);
         return "*New Proxy:*\n\n" .
-            "*Server*: `". $params['server'] ."`".
-            "\n*Port*: `". $params['port'] ."`".
-            "\n*Secret*: `". $params['secret'] ."`".
-            "\n\n• *Click to Connect*: [Proxy]($link)\n" .
-            "@IRProxyTel";
+            "*Server*: `" . $params['server'] . "`" .
+            "\n*Port*: `" . $params['port'] . "`" .
+            "\n*Secret*: `" . $params['secret'] . "`" .
+            "\n\n• *Click to Connect*: [Proxy]($link) | [Channel](https://t.me/IRProxyTel)";
     }
 
     public function isProxy($link)
@@ -129,19 +131,30 @@ class Bot
         if ($this->isProxy($message)) {
             $proxy = $message;
             $text = $this->Proxy($proxy);
-            $keyboard_buttons = [
-                new InlineKeyboardButton([
-                    'text' => 'Connect to Proxy',
-                    'url' => $message,
-                ]),
-            ];
+            $buttons = new InlineKeyboardButton([
+                'text' => 'Connect to Proxy',
+                'url' => $message,
+            ]);
 
             $data = [
                 'chat_id' => $chat_id,
                 'text' => $text,
-                'reply_markup' => new InlineKeyboard($keyboard_buttons),
+                'reply_markup' => new InlineKeyboard([$buttons]),
             ];
             $data['parse_mode'] = 'Markdown';
+
+            $extra_buttons = new InlineKeyboardButton([
+                'text' => 'Send To Channel',
+                'callback_data' => json_encode([
+                    "action" => "SendProxy",
+                    "data" => $data
+                ]),
+            ]);
+
+            $data['reply_markup'] = new InlineKeyboard([
+                $buttons,
+                $extra_buttons
+            ]);
 
             return Request::sendMessage($data);
         }
