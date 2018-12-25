@@ -142,15 +142,6 @@ class Bot
                     'text' => 'Connect to Proxy',
                     'url' => $message,
                 ]),
-                new InlineKeyboardButton([
-                    'text' => 'Send To Channel',
-                    'callback_data' => json_encode([
-                        'action' => "SendProxy",
-                        'data' => [
-                            'text' => $text
-                        ]
-                    ]),
-                ]),
                 /*new InlineKeyboardButton([
                     'text' => 'Send To Channel',
                     'callback_data' => json_encode([
@@ -169,6 +160,17 @@ class Bot
                 'disable_web_page_preview' => true,
                 'parse_mode' => "Markdown",
                 'reply_markup' => new InlineKeyboard($buttons),
+            ];
+            $data["reply_markup"]->inline_keyboard[1] = [
+                new InlineKeyboardButton([
+                    'text' => 'Send To Channel',
+                    'callback_data' => json_encode([
+                        'action' => "SendProxy",
+                        'data' => [
+                            'text' => $text
+                        ]
+                    ]),
+                ])
             ];
 
             var_dump(Request::sendMessage($data));
