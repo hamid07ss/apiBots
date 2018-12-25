@@ -187,6 +187,8 @@ class Bot
             unset($data["reply_markup"]->raw_data);
             unset($data["reply_markup"]->inline_keyboard[0]->raw_data);
             unset($data["reply_markup"]->inline_keyboard[1]->raw_data);
+            unset($data["reply_markup"]->inline_keyboard[0]->bot_username);
+            unset($data["reply_markup"]->inline_keyboard[1]->bot_username);
             var_dump(json_encode($data));
             var_dump(Request::sendMessage($data));
             return true;
