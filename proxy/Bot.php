@@ -90,11 +90,12 @@ class Bot
                 print("SendProxy");
                 $data = [];
                 $data['chat_id'] = "@IRProxyTel";
-                $data['text'] = $this->Proxy($callbackData->link);
+                $link = $this->createProxyLink($callbackData->proxy);
+                $data['text'] = $this->ProxyText($link);
                 $data['reply_markup'] = new InlineKeyboard([
                     new InlineKeyboardButton([
                         'text' => 'Connect to Proxy',
-                        'url' => $callbackData->link,
+                        'url' => $link,
                     ]),
                 ]);
                 var_dump($callbackData->data);
@@ -106,7 +107,7 @@ class Bot
         return false;
     }
 
-    public function Proxy($link)
+    public function ProxyText($link)
     {
         $url = parse_url($link);
         parse_str($url['query'], $params);
@@ -115,6 +116,23 @@ class Bot
             "\n*Port*: `" . $params['port'] . "`" .
             "\n*Secret*: `" . $params['secret'] . "`" .
             "\n\n• *Click to Connect*: [Proxy]($link) | [Channel](https://t.me/IRProxyTel)";
+    }
+
+    public function createProxyLink($params)
+    {
+        $link = 'https://t.me/proxy?server='. $params['server'] .'&port='. $params['port'] .'&secret='. $params['secret'];
+        return $link;
+    }
+
+    public function ProxyParams($link)
+    {
+        $url = parse_url($link);
+        parse_str($url['query'], $params);
+        return [
+            'server' => $params['server'],
+            'port' => $params['port'],
+            'secret' => $params['secret'],
+        ];
     }
 
     public function isProxy($link)
@@ -135,7 +153,7 @@ class Bot
         $chat_id = $result->getMessage()->getChat()->getId();
         if ($this->isProxy($message)) {
             $proxy = $message;
-            $text = $this->Proxy($proxy);
+            $text = $this->ProxyText($proxy);
 
             $buttons = [
                 new InlineKeyboardButton([
@@ -156,14 +174,14 @@ class Bot
                     'text' => 'Send To Channel',
                     'callback_data' => json_encode([
                         'action' => "SendProxy",
-                        'link' => $message
+                        'proxy' => $this->ProxyParams($message)
                     ]),
                 ])
             ];
 
             var_dump(json_encode([
                 'action' => "SendProxy",
-                'link' => $message
+                'proxy' => $this->ProxyParams($message)
             ]));
             var_dump(Request::sendMessage($data));
             return true;
