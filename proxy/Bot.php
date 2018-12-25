@@ -174,17 +174,16 @@ class Bot
                     'text' => 'Send To Channel',
                     'callback_data' => json_encode([
                         'action' => "SendProxy",
+                    ]),
+                    /*'callback_data' => json_encode([
+                        'action' => "SendProxy",
                         'server' => $proxyP['server'],
                         'port' => $proxyP['port'],
                         'secret' => $proxyP['secret'],
-                    ]),
+                    ]),*/
                 ])
             ];
 
-            var_dump(json_encode([
-                'action' => "SendProxy",
-                'proxy' => $this->ProxyParams($message)
-            ]));
             var_dump(Request::sendMessage($data));
             return true;
         }
