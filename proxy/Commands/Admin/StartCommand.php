@@ -44,8 +44,6 @@ class StartCommand extends AdminCommand {
             'parse_mode' => 'HTML',
         ];
 
-        $data['reply_markup'] = $bot->Buttons();
-
         return Request::sendMessage($data);
     }
 }
