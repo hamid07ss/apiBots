@@ -184,7 +184,7 @@ class Bot
                 ])
             ];*/
 
-            /*$data["reply_markup"] = [
+            $data["reply_markup"] = [
                 "inline_keyboard" => [
                     [
                         [
@@ -193,7 +193,7 @@ class Bot
                         ]
                     ]
                 ]
-            ];*/
+            ];
 
             var_dump(json_encode($data));
             var_dump(Request::sendMessage($data));
