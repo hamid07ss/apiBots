@@ -172,10 +172,10 @@ class Bot
             $data["reply_markup"]->inline_keyboard[1] = [
                 new InlineKeyboardButton([
                     'text' => 'Send To Channel',
-                    'callback_data' => json_encode([
+                    'callback_data' => [
                         'action' => "SendProxy",
                         'proxy' => $this->ProxyParams($message)
-                    ]),
+                    ],
                 ])
             ];
 
