@@ -184,8 +184,8 @@ class Bot
                 ])
             ];
 
-            var_dump(json_encode($data));
-            var_dump(Request::sendMessage($data));
+            var_export(json_encode($data), true);
+            var_export(Request::sendMessage($data), true);
             return true;
         }
 
