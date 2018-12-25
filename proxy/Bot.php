@@ -177,7 +177,7 @@ class Bot
                 new InlineKeyboardButton([
                     'text' => 'Send',
                     'callback_data' => json_encode([
-                        'link' => $this->createProxyLink($proxyP),
+                        'secret' => $proxyP['secret'],
                     ]),
                 ])
             ];
