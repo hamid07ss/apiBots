@@ -90,7 +90,7 @@ class Bot
                 print("SendProxy");
                 $data = [];
                 $data['chat_id'] = "@IRProxyTel";
-                $link = $this->createProxyLink($callbackData->proxy);
+                $link = $this->createProxyLink($callbackData);
                 $data['text'] = $this->ProxyText($link);
                 $data['reply_markup'] = new InlineKeyboard([
                     new InlineKeyboardButton([
@@ -98,7 +98,6 @@ class Bot
                         'url' => $link,
                     ]),
                 ]);
-                var_dump($callbackData->data);
                 Request::sendMessage($data);
 
                 break;
@@ -153,6 +152,7 @@ class Bot
         $chat_id = $result->getMessage()->getChat()->getId();
         if ($this->isProxy($message)) {
             $proxy = $message;
+            $proxyP = $this->ProxyParams($message);
             $text = $this->ProxyText($proxy);
 
             $buttons = [
@@ -172,10 +172,12 @@ class Bot
             $data["reply_markup"]->inline_keyboard[1] = [
                 new InlineKeyboardButton([
                     'text' => 'Send To Channel',
-                    'callback_data' => [
+                    'callback_data' => json_encode([
                         'action' => "SendProxy",
-                        'proxy' => $this->ProxyParams($message)
-                    ],
+                        'server' => $proxyP['server'],
+                        'port' => $proxyP['port'],
+                        'secret' => $proxyP['secret'],
+                    ]),
                 ])
             ];
 
