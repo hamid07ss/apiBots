@@ -111,6 +111,7 @@ class Bot
         $url = parse_url($link);
         parse_str($url['query'], $params);
         $link = $this->createProxyLink($params);
+        return "*New Proxy:*\n\n";
         return "*New Proxy:*\n\n" .
             "*Server*: `" . $params['server'] . "`" .
             "\n*Port*: `" . $params['port'] . "`" .
