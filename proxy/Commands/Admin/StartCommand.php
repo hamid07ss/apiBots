@@ -30,6 +30,7 @@ class StartCommand extends AdminCommand {
      */
     public function execute() {
         global $telegram, $bot;
+        print("AdminCommand Commands");
 
         $message = $this->getMessage();            // Get Message object
 

@@ -32,6 +32,7 @@ class StartCommand extends UserCommand {
      */
     public function execute() {
         global $bot;
+        print("UserCommand Commands");
 
         $message = $this->getMessage();            // Get Message object
 
