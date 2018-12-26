@@ -92,6 +92,7 @@ class Bot
                 $data['chat_id'] = "@IRProxyTel";
                 $link = $this->createProxyLink(Texts::$What_To_Do[$chat_id]);
                 $data['text'] = $this->ProxyText($link);
+                $data['parse_mode'] = "Markdown";
                 $data['reply_markup'] = new InlineKeyboard([
                     new InlineKeyboardButton([
                         'text' => 'Connect to Proxy',
