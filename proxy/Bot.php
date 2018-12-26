@@ -111,7 +111,6 @@ class Bot
         $url = parse_url($link);
         parse_str($url['query'], $params);
         $link = $this->createProxyLink($params);
-        return "*New Proxy:*\n\n";
         return "*New Proxy:*\n\n" .
             "*Server*: `" . $params['server'] . "`" .
             "\n*Port*: `" . $params['port'] . "`" .
@@ -160,8 +159,8 @@ class Bot
 
             $buttons = [
                 new InlineKeyboardButton([
-                    'text' => 'c',//'Connect to Proxy',
-                    'url' => 'c'//$this->createProxyLink($proxyP),
+                    'text' => 'Connect to Proxy',
+                    'url' => $this->createProxyLink($proxyP),
                 ]),
             ];
 
@@ -170,10 +169,10 @@ class Bot
                 'text' => $text,
                 'disable_web_page_preview' => true,
                 'parse_mode' => "Markdown",
-//                'reply_markup' => new InlineKeyboard($buttons),
+                'reply_markup' => new InlineKeyboard($buttons),
             ];
 
-            /*$data["reply_markup"]->inline_keyboard[1] = [
+            $data["reply_markup"]->inline_keyboard[1] = [
                 new InlineKeyboardButton([
                     'text' => 'Send',
                     'callback_data' => json_encode([
@@ -182,21 +181,7 @@ class Bot
                         'secret' => $proxyP['secret'],
                     ]),
                 ])
-            ];*/
-            $data["reply_markup"] = json_encode([
-                'inline_keyboard' => [
-                    [
-                        ['text' => "Connect", 'url' => "$proxy"]
-                    ],
-                    [
-                        ['text' => "Send to Channel", 'callback_data' => [
-                            'server' => $proxyP['server'],
-                            'port' => $proxyP['port'],
-                            'secret' => $proxyP['secret'],
-                        ]],
-                    ],
-                ],
-            ]);
+            ];
             var_dump(json_encode($data));
             var_dump(Request::sendMessage($data));
             return true;
