@@ -90,9 +90,14 @@ class Bot
                 print("SendProxy");
                 $data = [];
                 $data['chat_id'] = "@IRProxyTel";
+                var_dump(Texts::$Proxies);
+
+
+                return;
                 $link = $this->createProxyLink(Texts::$Proxies[$callbackData->proxy]);
                 $data['text'] = $this->ProxyText($link);
                 $data['parse_mode'] = "Markdown";
+                $data['disable_web_page_preview'] = "true";
                 $data['reply_markup'] = new InlineKeyboard([
                     new InlineKeyboardButton([
                         'text' => 'Connect to Proxy',
