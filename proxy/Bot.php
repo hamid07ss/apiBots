@@ -90,7 +90,7 @@ class Bot
                 print("SendProxy");
                 $data = [];
                 $data['chat_id'] = "@IRProxyTel";
-                $link = $this->createProxyLink($callbackData);
+                $link = $this->createProxyLink(Texts::$What_To_Do[$chat_id]);
                 $data['text'] = $this->ProxyText($link);
                 $data['reply_markup'] = new InlineKeyboard([
                     new InlineKeyboardButton([
@@ -98,6 +98,8 @@ class Bot
                         'url' => $link,
                     ]),
                 ]);
+
+                Texts::$What_To_Do[$chat_id] = [];
                 Request::sendMessage($data);
 
                 break;
@@ -171,18 +173,18 @@ class Bot
                 'parse_mode' => "Markdown",
                 'reply_markup' => new InlineKeyboard($buttons),
             ];
-
             $data["reply_markup"]->inline_keyboard[1] = [
                 new InlineKeyboardButton([
-                    'text' => 'Send',
-                    'callback_data' => json_encode([
-                        'server' => $proxyP['server'],
-                        'port' => $proxyP['port'],
-                        'secret' => $proxyP['secret'],
-                    ]),
+                    'text' => 'Send Proxy',
+                    'callback_data' => 'SendProxy',
                 ])
             ];
-            var_dump(json_encode($data));
+
+            Texts::$What_To_Do[$chat_id] = [
+                'server' => $proxyP['server'],
+                'port' => $proxyP['port'],
+                'secret' => $proxyP['secret'],
+            ];
             var_dump(Request::sendMessage($data));
             return true;
         }
