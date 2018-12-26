@@ -110,7 +110,7 @@ class Bot
 
         $Random = rand(0, count($emoji) - 1);
 
-        return $emoji[$Random];
+        return $emoji[$Random] . " ";
     }
 
     public function handleCallBack(Update $result)
