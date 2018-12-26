@@ -22,8 +22,8 @@ $mysql_credentials = [
     'database' => 'proxy',
 ];
 $commands_paths = [
-    __DIR__ . '/proxy/Commands/Admin/',
-    __DIR__ . '/proxy/Commands/User/'
+    __DIR__ . '/proxy/Commands/User/',
+    __DIR__ . '/proxy/Commands/Admin/'
 ];
 
 try {
