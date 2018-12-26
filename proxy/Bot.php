@@ -122,19 +122,22 @@ class Bot
             case "SendProxy":
                 print("SendProxy");
                 $data = [];
-                $data['chat_id'] = "@IRProxyTel";
-                $link = $this->createProxyLink(Texts::$Proxies[$callbackData->proxy]);
-                $data['text'] = $this->getSticker() . $this->ProxyText($link);
-                $data['parse_mode'] = "Markdown";
-                $data['disable_web_page_preview'] = "true";
-                $data['reply_markup'] = new InlineKeyboard([
-                    new InlineKeyboardButton([
-                        'text' => 'Connect to Proxy',
-                        'url' => $link,
-                    ]),
-                ]);
+                $data['chat_id'] = $callbackData->channel;
+                $proxy = Texts::$Proxies[$callbackData->proxy];
+                if($proxy['server']){
+                    $link = $this->createProxyLink(Texts::$Proxies[$callbackData->proxy]);
+                    $data['text'] = $this->getSticker() . $this->ProxyText($link, $callbackData->channel);
+                    $data['parse_mode'] = "Markdown";
+                    $data['disable_web_page_preview'] = "true";
+                    $data['reply_markup'] = new InlineKeyboard([
+                        new InlineKeyboardButton([
+                            'text' => 'Connect to Proxy',
+                            'url' => $link,
+                        ]),
+                    ]);
 
-                Request::sendMessage($data);
+                    Request::sendMessage($data);
+                }
 
                 break;
         }
@@ -142,16 +145,18 @@ class Bot
         return false;
     }
 
-    public function ProxyText($link)
+    public function ProxyText($link, $channel = "@IRProxyTel")
     {
         $url = parse_url($link);
         parse_str($url['query'], $params);
         $link = $this->createProxyLink($params);
+        $channelLink = str_replace('@', '', $channel);
+
         return "*New Proxy:*\n\n" .
             "*Server*: `" . $params['server'] . "`" .
             "\n*Port*: `" . $params['port'] . "`" .
             "\n*Secret*: `" . $params['secret'] . "`" .
-            "\n\n• *Click*: [Connect Proxy]($link) | [Channel](https://t.me/IRProxyTel)";
+            "\n\n• *Click*: [Connect Proxy]($link) | [Channel]($channelLink)";
     }
 
     public function createProxyLink($params)
@@ -214,9 +219,30 @@ class Bot
             ];
             $data["reply_markup"]->inline_keyboard[1] = [
                 new InlineKeyboardButton([
-                    'text' => 'Send Proxy',
+                    'text' => 'Send to @IRProxyTel',
                     'callback_data' => json_encode([
                         'action'=> 'SendProxy',
+                        'channel'=> '@IRProxyTel',
+                        'proxy'=> $proxyIndex - 1
+                    ]),
+                ])
+            ];
+            $data["reply_markup"]->inline_keyboard[2] = [
+                new InlineKeyboardButton([
+                    'text' => 'Send to @IRJoker',
+                    'callback_data' => json_encode([
+                        'action'=> 'SendProxy',
+                        'channel'=> '@IRJoker',
+                        'proxy'=> $proxyIndex - 1
+                    ]),
+                ])
+            ];
+            $data["reply_markup"]->inline_keyboard[3] = [
+                new InlineKeyboardButton([
+                    'text' => 'Send to @Proxies_Center',
+                    'callback_data' => json_encode([
+                        'action'=> 'SendProxy',
+                        'channel'=> '@Proxies_Center',
                         'proxy'=> $proxyIndex - 1
                     ]),
                 ])
