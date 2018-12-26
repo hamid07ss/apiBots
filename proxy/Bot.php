@@ -80,6 +80,39 @@ class Bot
         return $output;
     }
 
+    public function getSticker(){
+        $emoji = array(
+            '✨',
+            '⚡️',
+            '☄️',
+            '💥',
+            '🌪',
+            '🌟',
+            '💫',
+            '🌵',
+            '🍂',
+            '🌟',
+            '🌳',
+            '💠',
+            '🌿',
+            '⛅️',
+            '🍁',
+            '💎',
+            '🍃',
+            '🔥',
+            '⛈',
+            '🎈',
+            '🌀',
+            '🌱',
+            '🌈',
+            '☄️',
+            '🌧');
+
+        $Random = rand(0, count($emoji) - 1);
+
+        return $emoji[$Random];
+    }
+
     public function handleCallBack(Update $result)
     {
         $chat_id = $result->getCallbackQuery()->getMessage()->getChat()->getId();
@@ -91,7 +124,7 @@ class Bot
                 $data = [];
                 $data['chat_id'] = "@IRProxyTel";
                 $link = $this->createProxyLink(Texts::$Proxies[$callbackData->proxy]);
-                $data['text'] = $this->ProxyText($link);
+                $data['text'] = $this->getSticker() . $this->ProxyText($link);
                 $data['parse_mode'] = "Markdown";
                 $data['disable_web_page_preview'] = "true";
                 $data['reply_markup'] = new InlineKeyboard([
