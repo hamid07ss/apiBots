@@ -90,10 +90,6 @@ class Bot
                 print("SendProxy");
                 $data = [];
                 $data['chat_id'] = "@IRProxyTel";
-                var_dump(Texts::$Proxies);
-
-
-                return;
                 $link = $this->createProxyLink(Texts::$Proxies[$callbackData->proxy]);
                 $data['text'] = $this->ProxyText($link);
                 $data['parse_mode'] = "Markdown";
@@ -188,7 +184,7 @@ class Bot
                     'text' => 'Send Proxy',
                     'callback_data' => json_encode([
                         'action'=> 'SendProxy',
-                        'proxy'=> $proxyIndex
+                        'proxy'=> $proxyIndex - 1
                     ]),
                 ])
             ];
