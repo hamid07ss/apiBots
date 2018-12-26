@@ -156,7 +156,7 @@ class Bot
             "*Server*: `" . $params['server'] . "`" .
             "\n*Port*: `" . $params['port'] . "`" .
             "\n*Secret*: `" . $params['secret'] . "`" .
-            "\n\n• *Click*: [Connect Proxy]($link) | [Channel]($channelLink)";
+            "\n\n• *Click*: [Connect Proxy]($link) | [Channel](https://t.me/$channelLink)";
     }
 
     public function createProxyLink($params)
