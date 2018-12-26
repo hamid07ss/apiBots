@@ -176,7 +176,9 @@ class Bot
             $data["reply_markup"]->inline_keyboard[1] = [
                 new InlineKeyboardButton([
                     'text' => 'Send Proxy',
-                    'callback_data' => 'SendProxy',
+                    'callback_data' => [
+                        'action'=> 'SendProxy'
+                    ],
                 ])
             ];
 
